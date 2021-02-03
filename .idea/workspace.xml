@@ -11,7 +11,9 @@
     </option>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="046305be-3593-4718-91ce-e073cf4313e0" name="Default Changelist" comment="" />
+    <list default="true" id="5a7465d5-505e-4633-9ae7-891c0c2eda02" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/edu/colorado/group18/Ship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/edu/colorado/group18/Ship.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,76 +25,42 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
-  <component name="ProjectId" id="1nwqbdTZ3kRVkiQbJDbR4NB8kC7" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$APPLICATION_CONFIG_DIR$/scratches/scratch.gitignore" />
+  <component name="SvnConfiguration">
+    <configuration />
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Java Scratch">
-      <option name="MAIN_CLASS_NAME" value="edu.colorado.group18.Main" />
-      <module name="csci4448-battleship" />
-      <option name="SCRATCH_FILE_URL" value="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.gitignore" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="046305be-3593-4718-91ce-e073cf4313e0" name="Default Changelist" comment="" />
-      <created>1612311574553</created>
+      <changelist id="5a7465d5-505e-4633-9ae7-891c0c2eda02" name="Default Changelist" comment="" />
+      <created>1612311868861</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1612311574553</updated>
-      <workItem from="1612311578348" duration="916000" />
+      <updated>1612311868861</updated>
+      <workItem from="1612311886828" duration="654000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1612312367030">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="305" y="48" key="CommitChangelistDialog2" timestamp="1612312530047">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1612312367030" />
-    <state x="548" y="117" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1612312314160">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="548" y="117" key="#com.intellij.ide.macro.MacrosDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1612312314160" />
-    <state x="549" y="154" key="FileChooserDialogImpl" timestamp="1612312324402">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="549" y="154" key="FileChooserDialogImpl/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1612312324402" />
-    <state x="540" y="314" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1612311645554">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="540" y="314" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1612311645554" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1612311598280">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1612311598280" />
+    <state x="305" y="48" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1612312530047" />
   </component>
 </project>

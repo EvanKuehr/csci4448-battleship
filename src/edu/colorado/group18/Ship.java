@@ -4,6 +4,7 @@ package edu.colorado.group18;
 public class Ship {
     private String name;
     //Group 18, pair 1 was here
+    // Group 18, pair 2 was here
     // TODO: create appropriate getter and setter methods
     // TODO: Understand encapsulation
     // TODO: Understand what these todo comments mean

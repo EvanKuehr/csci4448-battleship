@@ -1,38 +1,43 @@
 package edu.colorado.group18;
 
 import org.junit.Test;
+import org.junit.Before;
 import static org.junit.Assert.*;
 
 public class ShipTest {
+    private Ship ship;
+
+    @Before
+    public void setUp() {
+        this.ship = new Ship("submarine", 3);
+    }
 
     // test constructor
     @ Test
     public void testConstructor() {
-        Ship ship = new Ship("submarine", 3);
-        assertEquals(3, ship.getCells().length);
+        assertEquals(3, this.ship.getCells().length);
     }
 
     // test hit method
     @ Test
     public void testHit() {
-        Ship ship = new Ship("submarine", 3);
-        for (int i = 1; i < ship.getLength(); i++) {
-            assertFalse(ship.getCells()[i]);
-            assertFalse(ship.hit(i));
-            assertTrue(ship.getCells()[i]);
+        for (int i = 1; i < this.ship.getLength(); i++) {
+            assertFalse(this.ship.getCells()[i]);
+            assertFalse(this.ship.hit(i));
+            assertTrue(this.ship.getCells()[i]);
         }
-        assertFalse(ship.getCells()[0]);
-        assertTrue(ship.hit(0));
-        assertTrue(ship.getCells()[0]);
+        assertFalse(this.ship.getCells()[0]);
+        assertTrue(this.ship.hit(0));
+        assertTrue(this.ship.getCells()[0]);
     }
 
     // test repair method
     @ Test
     public void testRepair() {
-        Ship ship = new Ship("submarine", 3);
-        assertFalse(ship.repair(0));
-        ship = new Ship("submarine", 3);
-        ship.hit(0);
-        assertTrue(ship.repair(0));
+        this.testHit();
+        assertFalse(this.ship.repair(0));
+        this.ship = new Ship("submarine", 3);
+        this.ship.hit(0);
+        assertTrue(this.ship.repair(0));
     }
 }

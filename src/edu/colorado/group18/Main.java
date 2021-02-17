@@ -6,6 +6,5 @@ public class Main {
         // write your code here
          Ship ship = new Ship();
          ship.show();
-
     }
 }

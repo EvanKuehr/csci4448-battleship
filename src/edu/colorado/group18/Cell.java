@@ -3,7 +3,7 @@ package edu.colorado.group18;
 public abstract class Cell {
     private boolean hit; //determines whether or not this cell has been hit before
 
-    public Cell() {
+    public Cell() { //default constructor
         hit = false;
     }
 
@@ -11,7 +11,7 @@ public abstract class Cell {
         return hit;
     }
 
-    public void updateHitStatus(boolean newStatus) {
+    public void setHitStatus(boolean newStatus) {
         hit = newStatus;
         return;
     }

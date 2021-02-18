@@ -5,13 +5,14 @@ import org.junit.Before;
 import static org.junit.Assert.*;
 
 public class CellTest {
-    private Cell shipCell;
+    private ShipCell shipCell;
     private Ship testShip;
 
     @Before
     public void setUp() {
         testShip = new Ship("submarine", 3);
-        shipCell = new ShipCell(testShip, 0);
+        Cell cell = new ShipCell(testShip, 0);
+        shipCell = (ShipCell)cell;
     }
 
     @Test
@@ -35,16 +36,16 @@ public class CellTest {
 
     @Test
     public void testGetIndex() {
-        assertEquals(0, shipCell.getArrayIndex());
+        assertEquals(0, shipCell.getShipArrayIndex());
     }
 
     @Test
     public void testHitShipRef() {
-        int index = shipCell.getArrayIndex();
+        int index = shipCell.getShipArrayIndex();
         Ship ship = shipCell.getShipRef();
 
         assertFalse(ship.getCells()[index]);
-        assertTrue(ship.hit(index));
+        ship.hit(index);
         assertTrue(ship.getCells()[index]);
     }
 }

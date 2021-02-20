@@ -1,8 +1,9 @@
 package edu.colorado.group18;
 
-import org.junit.Test;
-import org.junit.Before;
 import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class ShipTest {
     private Ship ship;
@@ -13,13 +14,13 @@ public class ShipTest {
     }
 
     // test constructor
-    @ Test
+    @Test
     public void testConstructor() {
         assertEquals(3, this.ship.getCells().length);
     }
 
     // test hit method
-    @ Test
+    @Test
     public void testHit() {
         for (int i = 1; i < this.ship.getLength(); i++) {
             assertFalse(this.ship.getCells()[i]);
@@ -32,7 +33,7 @@ public class ShipTest {
     }
 
     // test repair method
-    @ Test
+    @Test
     public void testRepair() {
         this.testHit();
         assertFalse(this.ship.repair(0));

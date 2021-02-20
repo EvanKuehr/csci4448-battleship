@@ -2,15 +2,16 @@ package edu.colorado.group18;
 
 import java.util.Arrays;
 
-// This is the  baseclass for your ship.  Modify accordingly
-// TODO: practice good OO design
+
 public class Ship {
     private String name;
     private int length;
     private boolean[] cells;
     private boolean sunk;
+    public boolean placed;
 
     public Ship(String name, int length) {
+        this.placed = false;
         this.sunk = false;
         this.name = name;
         this.length = length;

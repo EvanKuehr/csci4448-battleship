@@ -36,10 +36,12 @@ public class Player {
             if (orient == 'h') {
                 if (x < board.getX() && y < board.getY() - ship.getLength()) {
                     board.placeShip(ship, x, y, orient);
+                    ship.placed = true;
                 }
             } else if (orient == 'v') {
                 if (x < board.getX() - ship.getLength() && y < board.getY()) {
                     board.placeShip(ship, x, y, orient);
+                    ship.placed = true;
                 }
             }
         }

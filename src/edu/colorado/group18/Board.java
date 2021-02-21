@@ -16,6 +16,8 @@ public class Board {
             }
         }
     }
+
+    // GET METHODS
     public int getY() {
         return rows;
     }

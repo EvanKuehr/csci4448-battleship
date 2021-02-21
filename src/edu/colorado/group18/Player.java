@@ -13,7 +13,7 @@ public class Player {
         this.board = new Board(10, 10);
     }
 
-    // getters
+    // GET METHODS
     public double getBalance() {
         return balance;
     }
@@ -92,7 +92,7 @@ public class Player {
     public boolean shouldSurrender() {
         boolean retVal = true;
         for (Ship ship : fleet) { //for every ship in the player's fleet
-            if (!ship.isSunk()) {
+            if (!ship.getSunk()) {
                 retVal = false; //one of their ships isn't sunk so they shouldn't surrender
             }
         }

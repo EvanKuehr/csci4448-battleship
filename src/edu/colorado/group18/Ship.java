@@ -19,8 +19,25 @@ public class Ship {
         Arrays.fill(this.cells, false);
     }
 
-    // helper function for hit(), also used to detect if all ships are sunk
-    public boolean isSunk() {
+    // GET METHODS
+    public String getName() {
+        return name;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public boolean[] getCells() {
+        return cells;
+    }
+
+    public boolean getSunk() {
+        return this.sunk;
+    }
+
+    // helper function for hit()
+    private boolean isSunk() {
         for (boolean cell : this.cells) {
             if (!cell) return false;
         }
@@ -42,26 +59,5 @@ public class Ship {
             return true;
         }
         return false;
-    }
-
-    // GETTERS & SETTERS
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public boolean[] getCells() {
-        return cells;
-    }
-
-    public boolean getSunk() {
-        return this.sunk;
     }
 }

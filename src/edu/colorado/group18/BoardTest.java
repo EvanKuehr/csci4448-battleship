@@ -8,7 +8,7 @@ public class BoardTest {
     private Board B;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         int rows = 5; // Y
         int cols = 5; // X
         B = new Board(rows,cols);

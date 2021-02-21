@@ -30,17 +30,29 @@ public class Board {
         return cells[row][col];
     }
 
-    public void placeShip(Ship ship, int row, int col, char orientation) { // Place ship at given coordinates
-            if (orientation == 'h') { // Fill cells at and to the right of (col, row)
-                for (int j=col; j < ship.getLength()+col; j++) {
+    public boolean placeShip(Ship ship, int row, int col, char orientation) { // Place ship at given coordinates
+        boolean success = true;
+        if (orientation == 'h') { // Fill cells at and to the right of (col, row)
+            for (int j=col; j < ship.getLength()+col; j++) {
+                if (cells[row][j] instanceof ShipCell) {
+                    success = false; //can't place ships on top of each other
+                }
+                else {
                     cells[row][j] = new ShipCell(ship,j-col);
                 }
             }
-            else { // Fill cells at and below (row, col)
-                for (int i=row; i < ship.getLength()+row; i++) {
+        }
+        else { // Fill cells at and below (row, col)
+            for (int i=row; i < ship.getLength()+row; i++) {
+                if (cells[i][col] instanceof ShipCell) {
+                    success = false; //can't place ships on top of each other
+                }
+                else {
                     cells[i][col] = new ShipCell(ship,i-row);
                 }
             }
+        }
+        return success;
     }
 
     public boolean[] strike(int row, int col) {

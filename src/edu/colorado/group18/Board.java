@@ -4,13 +4,14 @@ public class Board {
 
     private int cols; // X-dimension
     private int rows; // Y-dimension
-    public Cell cells[][] = new Cell[rows][cols]; // 2-D array of Cell objects
+    public Cell cells[][]; // 2-D array of Cell objects
 
     public Board(int y, int x) {
         cols = x;
         rows = y;
-        for (int i=0; i < rows; i++) { //populate the array of cells with new cell objects
-            for (int j=0; j < cols; j++) {
+        cells = new Cell[rows][cols];
+        for (int i=0; i < cols; i++) { //populate the array of cells with new cell objects
+            for (int j=0; j < rows; j++) {
                 cells[i][j] = new Cell();
             }
         }

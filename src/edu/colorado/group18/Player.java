@@ -17,6 +17,7 @@ public class Player {
     public double getBalance() {
         return balance;
     }
+
     public String[] getDeck() {
         String[] abilities = new String[5];
         for (int i = 0; i < deck.length; i++) {
@@ -24,9 +25,11 @@ public class Player {
         }
         return abilities;
     }
+
     public Ship[] getFleet() {
         return fleet;
     }
+
     public Board getBoard() {
         return board;
     }
@@ -79,10 +82,21 @@ public class Player {
         return retArray;
     }
 
+
     //returns a list of two booleans:
     //index 0: if a ship was hit
     //index 1: if a ship was sunk as a result of the strike
     public boolean[] receiveStrike(int x, int y) {
         return board.strike(x, y);
+    }
+
+    public boolean shouldSurrender() {
+        boolean retVal = true;
+        for (Ship ship : fleet) { //for every ship in the player's fleet
+            if (!ship.isSunk()) {
+                retVal = false; //one of their ships isn't sunk so they shouldn't surrender
+            }
+        }
+        return retVal;
     }
 }

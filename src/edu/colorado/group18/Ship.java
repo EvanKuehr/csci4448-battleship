@@ -19,8 +19,8 @@ public class Ship {
         Arrays.fill(this.cells, false);
     }
 
-    // helper function for hit()
-    private boolean isSunk() {
+    // helper function for hit(), also used to detect if all ships are sunk
+    public boolean isSunk() {
         for (boolean cell : this.cells) {
             if (!cell) return false;
         }

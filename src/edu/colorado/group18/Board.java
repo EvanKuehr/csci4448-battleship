@@ -30,13 +30,13 @@ public class Board {
 
     public void placeShip(Ship ship, int col, int row, char orientation) { // Place ship at given coordinates
             if (orientation == 'h') { // Fill cells at and to the right of (col, row)
-                for (int j=0; j < ship.getLength(); j++) {
-                    cells[row][j] = new ShipCell(ship,j);
+                for (int i=col; i < ship.getLength(); i++) {
+                    cells[i][row] = new ShipCell(ship,i);
                 }
             }
             else { // Fill cells at and above (col, row)
-                for (int i=0; i < ship.getLength(); i++) {
-                    cells[i][col] = new ShipCell(ship,i);
+                for (int j=row; j < ship.getLength(); j++) {
+                    cells[col][j] = new ShipCell(ship,j);
                 }
             }
     }

@@ -31,20 +31,24 @@ public class Player {
         return board;
     }
 
-    public void placeShip(Ship ship, int x, int y, char orient) {
+    public boolean placeShip(Ship ship, int x, int y, char orient) {
+        boolean success = false;
         if (!ship.placed) {
             if (orient == 'h') {
                 if (x < board.getX() && y < board.getY() - ship.getLength()) {
                     board.placeShip(ship, x, y, orient);
                     ship.placed = true;
+                    success = true;
                 }
             } else if (orient == 'v') {
                 if (x < board.getX() - ship.getLength() && y < board.getY()) {
                     board.placeShip(ship, x, y, orient);
                     ship.placed = true;
+                    success = true;
                 }
             }
         }
+        return success;
     }
 
 

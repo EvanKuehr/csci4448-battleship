@@ -65,15 +65,20 @@ public class Player {
     public Card useCard(int index) {
         return deck[index];
     }
-    public boolean strike(Player opponent, int x, int y) {
+    public boolean[] strike(Player opponent, int x, int y) {
         return opponent.receiveStrike(x, y);
     }
-    public boolean strike(Player opponent, int x, int y, Card card) {
+    public boolean[] strike(Player opponent, int x, int y, Card card) {
         // TODO: attack using special ability
         System.out.println(card.ability);
-        return false;
+        boolean[] retArray = {false,false};
+        return retArray;
     }
-    public boolean receiveStrike(int x, int y) {
+
+    //returns a list of two booleans:
+    //index 0: if a ship was hit
+    //index 1: if a ship was sunk as a result of the strike
+    public boolean[] receiveStrike(int x, int y) {
         return board.strike(x, y);
     }
 }

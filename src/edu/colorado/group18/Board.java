@@ -9,6 +9,11 @@ public class Board {
     public Board(int y, int x) {
         cols = x;
         rows = y;
+        for (int i=0; i < rows; i++) { //populate the array of cells with new cell objects
+            for (int j=0; j < cols; j++) {
+                cells[i][j] = new Cell();
+            }
+        }
     }
 
     public int getX() {
@@ -23,18 +28,16 @@ public class Board {
     }
 
     public void placeShip(Ship ship, int col, int row, char orientation) { // Place ship at given coordinates
-        if (col <= cols && row <= rows) { // Initial bounds check
-            if (orientation == 'h') { // Fill cells to the right of (col, row)
-                if (ship.getLength() <= cols - col) {
-                    cells[row][col] = ship;
+            if (orientation == 'h') { // Fill cells at and to the right of (col, row)
+                for (int j=0; j < ship.getLength(); j++) {
+                    cells[row][j] = new ShipCell(ship,j);
                 }
             }
-            else { // Fill cells above (col, row)
-                if (ship.getLength() <= rows - row) {
-                    cells[row][col] = ship;
+            else { // Fill cells at and above (col, row)
+                for (int i=0; i < ship.getLength(); i++) {
+                    cells[i][col] = new ShipCell(ship,i);
                 }
             }
-        }
     }
 
     public boolean[] strike(int col, int row) {

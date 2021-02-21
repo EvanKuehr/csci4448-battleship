@@ -2,46 +2,46 @@ package edu.colorado.group18;
 
 public class Board {
 
-    private int cols; // X-dimension
     private int rows; // Y-dimension
+    private int cols; // X-dimension
     public Cell cells[][]; // 2-D array of Cell objects
 
     public Board(int y, int x) {
-        cols = x;
         rows = y;
+        cols = x;
         cells = new Cell[rows][cols];
-        for (int i=0; i < cols; i++) { //populate the array of cells with new cell objects
-            for (int j=0; j < rows; j++) {
+        for (int i=0; i < rows; i++) { //populate the array of cells with new cell objects
+            for (int j=0; j < cols; j++) {
                 cells[i][j] = new Cell();
             }
         }
-    }
-
-    public int getX() {
-        return cols;
     }
     public int getY() {
         return rows;
     }
 
-    public Cell getCell(int col, int row) { // Return cell at coordinates (col, row)
+    public int getX() {
+        return cols;
+    }
+
+    public Cell getCell(int row, int col) { // Return cell at coordinates (row, col)
         return cells[row][col];
     }
 
-    public void placeShip(Ship ship, int col, int row, char orientation) { // Place ship at given coordinates
+    public void placeShip(Ship ship, int row, int col, char orientation) { // Place ship at given coordinates
             if (orientation == 'h') { // Fill cells at and to the right of (col, row)
-                for (int i=col; i < ship.getLength(); i++) {
-                    cells[i][row] = new ShipCell(ship,i);
+                for (int j=col; j < ship.getLength()+col; j++) {
+                    cells[row][j] = new ShipCell(ship,j-col);
                 }
             }
-            else { // Fill cells at and above (col, row)
-                for (int j=row; j < ship.getLength(); j++) {
-                    cells[col][j] = new ShipCell(ship,j);
+            else { // Fill cells at and below (row, col)
+                for (int i=row; i < ship.getLength()+row; i++) {
+                    cells[i][col] = new ShipCell(ship,i-row);
                 }
             }
     }
 
-    public boolean[] strike(int col, int row) {
+    public boolean[] strike(int row, int col) {
         Cell cell = cells[row][col];
         boolean hitShip = false;
         boolean sinkStatus = false;

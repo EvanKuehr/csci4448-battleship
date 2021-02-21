@@ -34,18 +34,18 @@ public class Player {
         return board;
     }
 
-    public boolean placeShip(Ship ship, int x, int y, char orient) {
+    public boolean placeShip(Ship ship, int y, int x, char orient) {
         boolean success = false;
         if (!ship.placed) {
             if (orient == 'v') {
                 if (x < board.getX() && y < board.getY() - ship.getLength()) {
-                    board.placeShip(ship, x, y, orient);
+                    board.placeShip(ship, y, x, orient);
                     ship.placed = true;
                     success = true;
                 }
             } else if (orient == 'h') {
                 if (x < board.getX() - ship.getLength() && y < board.getY()) {
-                    board.placeShip(ship, x, y, orient);
+                    board.placeShip(ship, y, x, orient);
                     ship.placed = true;
                     success = true;
                 }
@@ -53,7 +53,6 @@ public class Player {
         }
         return success;
     }
-
 
     public void buyCard(Card card) {
         if (balance >= card.cost) {
@@ -68,26 +67,26 @@ public class Player {
         }
     }
 
-
     public Card useCard(int index) {
         return deck[index];
     }
-    public boolean[] strike(Player opponent, int x, int y) {
-        return opponent.receiveStrike(x, y);
+
+    public boolean[] strike(Player opponent, int y, int x) {
+        return opponent.receiveStrike(y, x);
     }
-    public boolean[] strike(Player opponent, int x, int y, Card card) {
+
+    public boolean[] strike(Player opponent, int y, int x, Card card) {
         // TODO: attack using special ability
         System.out.println(card.ability);
         boolean[] retArray = {false,false};
         return retArray;
     }
 
-
     //returns a list of two booleans:
     //index 0: if a ship was hit
     //index 1: if a ship was sunk as a result of the strike
-    public boolean[] receiveStrike(int x, int y) {
-        return board.strike(x, y);
+    public boolean[] receiveStrike(int y, int x) {
+        return board.strike(y, x);
     }
 
     public boolean shouldSurrender() {

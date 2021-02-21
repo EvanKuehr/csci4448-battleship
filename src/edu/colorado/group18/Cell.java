@@ -13,6 +13,5 @@ public class Cell {
 
     public void setHitStatus(boolean newStatus) {
         hit = newStatus;
-        return;
     }
 }

@@ -76,4 +76,5 @@ public class Player {
     public boolean receiveStrike(int x, int y) {
         return board.strike(x, y);
     }
+    // TODO: implement receiveStrike() for strike() special overload function
 }

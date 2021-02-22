@@ -13,10 +13,11 @@ public class Player {
         this.board = new Board(10, 10);
     }
 
-    // getters
+    // GET METHODS
     public double getBalance() {
         return balance;
     }
+
     public String[] getDeck() {
         String[] abilities = new String[5];
         for (int i = 0; i < deck.length; i++) {
@@ -24,29 +25,36 @@ public class Player {
         }
         return abilities;
     }
+
     public Ship[] getFleet() {
         return fleet;
     }
+
     public Board getBoard() {
         return board;
     }
 
-    public void placeShip(Ship ship, int x, int y, char orient) {
+    public boolean placeShip(Ship ship, int y, int x, char orient) {
+        boolean success = false;
         if (!ship.placed) {
-            if (orient == 'h') {
+            if (orient == 'v') {
                 if (x < board.getX() && y < board.getY() - ship.getLength()) {
-                    board.placeShip(ship, x, y, orient);
-                    ship.placed = true;
+                    if (board.placeShip(ship, y, x, orient)) {
+                        ship.placed = true;
+                        success = true;
+                    }
                 }
-            } else if (orient == 'v') {
+            } else if (orient == 'h') {
                 if (x < board.getX() - ship.getLength() && y < board.getY()) {
-                    board.placeShip(ship, x, y, orient);
-                    ship.placed = true;
+                    if(board.placeShip(ship, y, x, orient)) {
+                        ship.placed = true;
+                        success = true;
+                    }
                 }
             }
         }
+        return success;
     }
-
 
     public void buyCard(Card card) {
         if (balance >= card.cost) {
@@ -61,20 +69,36 @@ public class Player {
         }
     }
 
-
     public Card useCard(int index) {
         return deck[index];
     }
-    public boolean strike(Player opponent, int x, int y) {
-        return opponent.receiveStrike(x, y);
+
+    public boolean[] strike(Player opponent, int y, int x) {
+        return opponent.receiveStrike(y, x);
     }
-    public boolean strike(Player opponent, int x, int y, Card card) {
+
+    public boolean[] strike(Player opponent, int y, int x, Card card) {
         // TODO: attack using special ability
         System.out.println(card.ability);
-        return false;
+        boolean[] retArray = {false,false};
+        return retArray;
     }
-    public boolean receiveStrike(int x, int y) {
-        return board.strike(x, y);
+
+    //returns a list of two booleans:
+    //index 0: if a ship was hit
+    //index 1: if a ship was sunk as a result of the strike
+    public boolean[] receiveStrike(int y, int x) {
+        return board.strike(y, x);
+    }
+
+    public boolean shouldSurrender() {
+        boolean retVal = true;
+        for (Ship ship : fleet) { //for every ship in the player's fleet
+            if (!ship.getSunk()) {
+                retVal = false; //one of their ships isn't sunk so they shouldn't surrender
+            }
+        }
+        return retVal;
     }
     // TODO: implement receiveStrike() for strike() special overload function
 }

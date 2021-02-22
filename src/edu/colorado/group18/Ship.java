@@ -19,6 +19,23 @@ public class Ship {
         Arrays.fill(this.cells, false);
     }
 
+    // GET METHODS
+    public String getName() {
+        return name;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public boolean[] getCells() {
+        return cells;
+    }
+
+    public boolean getSunk() {
+        return this.sunk;
+    }
+
     // helper function for hit()
     private boolean isSunk() {
         for (boolean cell : this.cells) {
@@ -42,26 +59,5 @@ public class Ship {
             return true;
         }
         return false;
-    }
-
-    // GETTERS & SETTERS
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public boolean[] getCells() {
-        return cells;
-    }
-
-    public boolean getSunk() {
-        return this.sunk;
     }
 }

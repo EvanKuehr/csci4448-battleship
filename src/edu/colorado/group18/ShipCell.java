@@ -1,5 +1,6 @@
 package edu.colorado.group18;
 
+//Child class of Cell, also tested in CellTest file
 public class ShipCell extends Cell {
     private Ship shipRef;
     private int shipArrayIndex;

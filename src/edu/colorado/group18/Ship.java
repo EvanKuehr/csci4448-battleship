@@ -9,8 +9,10 @@ public class Ship {
     private boolean[] cells;
     private boolean sunk;
     public boolean placed;
+    private int captainsLocation;
 
-    public Ship(String name, int length) {
+    public Ship(String name, int length, int captainsLocation) {
+        this.captainsLocation = captainsLocation;
         this.placed = false;
         this.sunk = false;
         this.name = name;
@@ -34,6 +36,10 @@ public class Ship {
 
     public boolean getSunk() {
         return this.sunk;
+    }
+
+    public int getCaptainsLocation() {
+        return this.captainsLocation;
     }
 
     // helper function for hit()

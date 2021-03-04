@@ -17,7 +17,7 @@ public class ShipTest {
 
     @Before
     public void setUp() {
-        ship = new Ship("submarine", 3);
+        ship = new Ship("submarine", 3,0);
     }
 
     // test constructor

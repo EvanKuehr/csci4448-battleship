@@ -28,12 +28,14 @@ public class Board {
 
     public boolean placeShip(Ship ship, int row, int col, char orientation) { // Place ship at given coordinates
         boolean success = true;
+        int captainIndex = ship.getCaptainsLocation();
         if (orientation == 'h') { // Fill cells at and to the right of (col, row)
             for (int j=col; j < ship.getLength()+col; j++) {
                 if (cells[row][j] instanceof ShipCell) {
                     success = false; //can't place ships on top of each other
-                }
-                else {
+                } else if (j == captainIndex && ship.getLength() > 2) {
+                    cells[row][j] = new CaptainsQuarters(ship,j-col);
+                } else {
                     cells[row][j] = new ShipCell(ship,j-col);
                 }
             }
@@ -42,8 +44,9 @@ public class Board {
             for (int i=row; i < ship.getLength()+row; i++) {
                 if (cells[i][col] instanceof ShipCell) {
                     success = false; //can't place ships on top of each other
-                }
-                else {
+                } else if (i == captainIndex && ship.getLength() > 2) {
+                    cells[i][col] = new CaptainsQuarters(ship,i-row);
+                } else {
                     cells[i][col] = new ShipCell(ship,i-row);
                 }
             }

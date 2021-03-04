@@ -10,7 +10,7 @@ public class PlayerTest {
 
     @Before
     public void setUp() {
-        Ship[] fleet1 = {new Ship("ship1",2), new Ship("ship2", 3)};
+        Ship[] fleet1 = {new Ship("ship1",2,0), new Ship("ship2", 3,0)};
         p1 = new Player(fleet1);
     }
 
@@ -58,7 +58,7 @@ public class PlayerTest {
 
     @Test
     public void checkStrikeOpponent() {
-        Ship[] fleet2 = {new Ship("ship3",2)};
+        Ship[] fleet2 = {new Ship("ship3",2,0)};
         Player p2 = new Player(fleet2);
         p2.placeShip(p2.getFleet()[0], 0, 0, 'h');
 
@@ -114,7 +114,7 @@ public class PlayerTest {
 
     //helper function
     public Player createSonarEnemy() {
-        Ship[] fleet = {new Ship("ship3",2), new Ship("ship4", 3), new Ship("ship5", 3)};
+        Ship[] fleet = {new Ship("ship3",2,0), new Ship("ship4", 3,0), new Ship("ship5", 3,0)};
         Player p = new Player(fleet);
         p.placeShip(p.getFleet()[0], 3, 2, 'h');
         p.placeShip(p.getFleet()[1], 5, 4, 'v');

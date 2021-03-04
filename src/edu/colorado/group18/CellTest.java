@@ -10,7 +10,7 @@ public class CellTest {
 
     @Before
     public void setUp() {
-        testShip = new Ship("submarine", 3);
+        testShip = new Ship("submarine", 3,0);
         Cell cell = new ShipCell(testShip, 0);
         shipCell = (ShipCell)cell;
     }

@@ -111,5 +111,75 @@ public class PlayerTest {
         }
         assertTrue(p1.shouldSurrender());
     }
+
+    //helper function
+    public Player createRadarEnemy() {
+        Ship[] fleet = {new Ship("ship3",2), new Ship("ship4", 3), new Ship("ship5", 3)};
+        Player p = new Player(fleet);
+        p.placeShip(p.getFleet()[0], 3, 2, 'h');
+        p.placeShip(p.getFleet()[1], 5, 4, 'v');
+        p.placeShip(p.getFleet()[2], 0, 0, 'v');
+        return p;
+    }
+
+    //helper function
+    public void strikeBeforeRadar(Player opponent) {
+        p1.strike(opponent, 0, 0);
+        p1.strike(opponent, 1, 0);
+        p1.strike(opponent, 2, 0);
+    }
+
+    @Test
+    public void checkCanUseRadar() {
+        Player p2 = createRadarEnemy();
+
+        assertFalse(p1.canUseRadar()); //can't use radar before sinking a ship
+        strikeBeforeRadar(p2); //sinks an enemy ship
+        assertTrue(p1.canUseRadar());
+        useRadar(0,0);
+        assertTrue(p1.canUseRadar());
+        useRadar(0,0);
+        assertFalse(p1.canUseRadar()); //radar can only be used up to two times
+    }
+
+    @Test
+    public void checkUseRadar1() {
+        Player p2 = createRadarEnemy();
+        int[][] expectedBoard = {
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1, 0,-1,-1,-1,-1,-1},
+                {-1,-1,-1, 2, 0, 0,-1,-1,-1,-1},
+                {-1,-1, 0, 0, 0, 0, 0,-1,-1,-1},
+                {-1,-1,-1, 0, 2, 0,-1,-1,-1,-1},
+                {-1,-1,-1,-1, 2,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
+        };
+
+        strikeBeforeRadar(p2);
+        assertEquals(expectedBoard, useRadar(4,4));
+    }
+
+    @Test
+    public void checkUseRadar2() {
+        Player p2 = createRadarEnemy();
+        int[][] expectedBoard = {
+                { 2, 0, 0,-1,-1,-1,-1,-1,-1,-1},
+                { 2, 0,-1,-1,-1,-1,-1,-1,-1,-1},
+                { 2,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
+                {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
+        };
+
+        strikeBeforeRadar(p2);
+        assertEquals(expectedBoard, useRadar(0,0));
+    }
 }
 

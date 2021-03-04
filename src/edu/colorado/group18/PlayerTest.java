@@ -113,7 +113,7 @@ public class PlayerTest {
     }
 
     //helper function
-    public Player createRadarEnemy() {
+    public Player createSonarEnemy() {
         Ship[] fleet = {new Ship("ship3",2), new Ship("ship4", 3), new Ship("ship5", 3)};
         Player p = new Player(fleet);
         p.placeShip(p.getFleet()[0], 3, 2, 'h');
@@ -123,28 +123,28 @@ public class PlayerTest {
     }
 
     //helper function
-    public void strikeBeforeRadar(Player opponent) {
+    public void strikeBeforeSonar(Player opponent) {
         p1.strike(opponent, 0, 0);
         p1.strike(opponent, 1, 0);
         p1.strike(opponent, 2, 0);
     }
 
     @Test
-    public void checkCanUseRadar() {
-        Player p2 = createRadarEnemy();
+    public void checkCanUseSonar() {
+        Player p2 = createSonarEnemy();
 
-        assertFalse(p1.canUseRadar()); //can't use radar before sinking a ship
-        strikeBeforeRadar(p2); //sinks an enemy ship
-        assertTrue(p1.canUseRadar());
-        useRadar(0,0);
-        assertTrue(p1.canUseRadar());
-        useRadar(0,0);
-        assertFalse(p1.canUseRadar()); //radar can only be used up to two times
+        assertFalse(p1.canUseSonar(p2)); //can't use Sonar before sinking a ship
+        strikeBeforeSonar(p2); //sinks an enemy ship
+        assertTrue(p1.canUseSonar(p2));
+        p1.useSonar(p2,0,0);
+        assertTrue(p1.canUseSonar(p2));
+        p1.useSonar(p2,0,0);
+        assertFalse(p1.canUseSonar(p2)); //Sonar can only be used up to two times
     }
 
     @Test
-    public void checkUseRadar1() {
-        Player p2 = createRadarEnemy();
+    public void checkUseSonar1() {
+        Player p2 = createSonarEnemy();
         int[][] expectedBoard = {
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -158,13 +158,14 @@ public class PlayerTest {
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
         };
 
-        strikeBeforeRadar(p2);
-        assertEquals(expectedBoard, useRadar(4,4));
+        strikeBeforeSonar(p2);
+        assertTrue(p1.canUseSonar(p2));
+        assertEquals(expectedBoard, p1.useSonar(p2,4,4));
     }
 
     @Test
-    public void checkUseRadar2() {
-        Player p2 = createRadarEnemy();
+    public void checkUseSonar2() {
+        Player p2 = createSonarEnemy();
         int[][] expectedBoard = {
                 { 2, 0, 0,-1,-1,-1,-1,-1,-1,-1},
                 { 2, 0,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -178,8 +179,9 @@ public class PlayerTest {
                 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
         };
 
-        strikeBeforeRadar(p2);
-        assertEquals(expectedBoard, useRadar(0,0));
+        strikeBeforeSonar(p2);
+        assertTrue(p1.canUseSonar(p2));
+        assertEquals(expectedBoard, p1.useSonar(p2,0,0));
     }
 }
 

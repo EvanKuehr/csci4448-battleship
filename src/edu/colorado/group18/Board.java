@@ -22,13 +22,9 @@ public class Board {
         return rows;
     }
 
-    public int getX() {
-        return cols;
-    }
+    public int getX() { return cols; }
 
-    public Cell getCell(int row, int col) { // Return cell at coordinates (row, col)
-        return cells[row][col];
-    }
+    public Cell getCell(int row, int col) { return cells[row][col]; } // Return cell at coordinates (row, col)
 
     public boolean placeShip(Ship ship, int row, int col, char orientation) { // Place ship at given coordinates
         boolean success = true;

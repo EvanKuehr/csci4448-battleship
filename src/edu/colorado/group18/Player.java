@@ -1,16 +1,19 @@
 package edu.colorado.group18;
+import java.util.Arrays;
 
 public class Player {
     private double balance;
     private Card[] deck;
     private Ship[] fleet;
     private Board board;
+    private int numSonars;
 
     public Player(Ship[] fleet) {
         this.balance = 0.0;
         this.deck = new Card[5];
         this.fleet = fleet;
         this.board = new Board(10, 10);
+        this.numSonars = 2;
     }
 
     // GET METHODS
@@ -91,14 +94,68 @@ public class Player {
         return board.strike(y, x);
     }
 
+    // TODO: implement receiveStrike() for strike() special overload function
+
     public boolean shouldSurrender() {
         boolean retVal = true;
         for (Ship ship : fleet) { //for every ship in the player's fleet
             if (!ship.getSunk()) {
                 retVal = false; //one of their ships isn't sunk so they shouldn't surrender
+                break;
             }
         }
         return retVal;
     }
-    // TODO: implement receiveStrike() for strike() special overload function
+
+    public boolean hasSunkenShip() {
+        boolean retVal = false;
+        for (Ship ship : fleet) { //for every ship in the player's fleet
+            if (ship.getSunk()) {
+                retVal = true; //one of their ships is sunk
+                break;
+            }
+        }
+        return retVal;
+    }
+
+    public boolean canUseSonar(Player opponent) {
+        boolean retVal = false;
+        if (opponent.hasSunkenShip()) {
+            if (numSonars > 0) {
+                retVal = true;
+            }
+        }
+        return retVal;
+    }
+
+    public int[][] receiveSonar(int y, int x) {
+        int yDim = board.getY();
+        int xDim = board.getX();
+        int[][] retArray = new int[yDim][xDim];
+
+        for (int[] row : retArray) {
+            Arrays.fill(row,-1); //-1 represents parts not in the sonar
+        }
+
+        for (int j = y-2; j <= y+2; j++) {
+            for (int i = x-2; i <= x+2; i++) {
+                if (j >= 0 && i >= 0) { //if not out of bounds
+                    if (Math.abs(j - y) + Math.abs(i - x) <= 2) { //if at most 2 cells away from the sonar's origin
+                        if (board.getCell(j,i) instanceof ShipCell) { //if the cell contains part of a ship
+                            retArray[j][i] = 2; //2 represents part of a ship
+                        }
+                        else {
+                            retArray[j][i] = 0; //0 represents a part of the sonar but not a ship
+                        }
+                    }
+                }
+            }
+        }
+        return retArray;
+    }
+
+    public int[][] useSonar(Player opponent, int y, int x) {
+        numSonars -= 1;
+        return opponent.receiveSonar(y,x);
+    }
 }

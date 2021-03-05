@@ -1,4 +1,7 @@
-package edu.colorado.group18;
+package test;
+import edu.colorado.group18.Cell;
+import edu.colorado.group18.Ship;
+import edu.colorado.group18.ShipCell;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -10,7 +13,7 @@ public class CellTest {
 
     @Before
     public void setUp() {
-        testShip = new Ship("submarine", 3,0);
+        testShip = new Ship("submarine", 3,-1);
         Cell cell = new ShipCell(testShip, 0);
         shipCell = (ShipCell)cell;
     }

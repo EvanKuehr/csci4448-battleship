@@ -1,7 +1,8 @@
-package edu.colorado.group18;
+package test;
 
 import static org.junit.Assert.*;
 
+import edu.colorado.group18.Ship;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class ShipTest {
 
     @Before
     public void setUp() {
-        ship = new Ship("submarine", 3,0);
+        ship = new Ship("submarine", 3,-1);
     }
 
     // test constructor

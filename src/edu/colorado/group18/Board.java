@@ -33,7 +33,7 @@ public class Board {
             for (int j=col; j < ship.getLength()+col; j++) {
                 if (cells[row][j] instanceof ShipCell) {
                     success = false; //can't place ships on top of each other
-                } else if (j == captainIndex && ship.getLength() > 2) {
+                } else if (j == captainIndex+col && ship.getLength() > 2) {
                     cells[row][j] = new CaptainsQuarters(ship,j-col);
                 } else {
                     cells[row][j] = new ShipCell(ship,j-col);
@@ -44,7 +44,7 @@ public class Board {
             for (int i=row; i < ship.getLength()+row; i++) {
                 if (cells[i][col] instanceof ShipCell) {
                     success = false; //can't place ships on top of each other
-                } else if (i == captainIndex && ship.getLength() > 2) {
+                } else if (i == captainIndex+row && ship.getLength() > 2) {
                     cells[i][col] = new CaptainsQuarters(ship,i-row);
                 } else {
                     cells[i][col] = new ShipCell(ship,i-row);
@@ -59,10 +59,10 @@ public class Board {
         boolean hitShip = false;
         boolean sinkStatus = false;
 
-        cell.setHitStatus(true); //the cell was targeted/hit
+        cell.setHitStatus(true); //the cell was targeted/hit, if it is a ShipCell, the corresponding Ship will listen for the change and update accordingly
         if (cell instanceof ShipCell) { //cell is occupied with a part of a ship
             ShipCell shipCell = (ShipCell)cell; //cast the Cell to a ShipCell
-            sinkStatus = shipCell.getShipRef().hit(shipCell.getShipArrayIndex()); //hit the ship cell, sink status is true if the ship sunk
+            sinkStatus = shipCell.getShipRef().getSunk(); //knows if the ship is sunk
             hitShip = true;
         }
         boolean[] retArray = {hitShip,sinkStatus};

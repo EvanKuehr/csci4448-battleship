@@ -2,7 +2,8 @@ package edu.colorado.group18;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
-  
+import test.TestSuite;
+
 public class Main {
     public static void main(String[] args) {
         //Tutorial followed to run a JUnit test suite: https://bit.ly/3pJ8vzb

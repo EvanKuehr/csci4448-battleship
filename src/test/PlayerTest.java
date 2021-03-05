@@ -1,4 +1,6 @@
-package edu.colorado.group18;
+package test;
+import edu.colorado.group18.Player;
+import edu.colorado.group18.Ship;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -10,7 +12,7 @@ public class PlayerTest {
 
     @Before
     public void setUp() {
-        Ship[] fleet1 = {new Ship("ship1",2,0), new Ship("ship2", 3,0)};
+        Ship[] fleet1 = {new Ship("ship1",2,-1), new Ship("ship2", 3,-1)};
         p1 = new Player(fleet1);
     }
 
@@ -58,7 +60,7 @@ public class PlayerTest {
 
     @Test
     public void checkStrikeOpponent() {
-        Ship[] fleet2 = {new Ship("ship3",2,0)};
+        Ship[] fleet2 = {new Ship("ship3",2,-1)};
         Player p2 = new Player(fleet2);
         p2.placeShip(p2.getFleet()[0], 0, 0, 'h');
 
@@ -114,7 +116,7 @@ public class PlayerTest {
 
     //helper function
     public Player createSonarEnemy() {
-        Ship[] fleet = {new Ship("ship3",2,0), new Ship("ship4", 3,0), new Ship("ship5", 3,0)};
+        Ship[] fleet = {new Ship("ship3",2,-1), new Ship("ship4", 3,-1), new Ship("ship5", 3,-1)};
         Player p = new Player(fleet);
         p.placeShip(p.getFleet()[0], 3, 2, 'h');
         p.placeShip(p.getFleet()[1], 5, 4, 'v');
@@ -160,7 +162,7 @@ public class PlayerTest {
 
         strikeBeforeSonar(p2);
         assertTrue(p1.canUseSonar(p2));
-        assertEquals(expectedBoard, p1.useSonar(p2,4,4));
+        assertArrayEquals(expectedBoard, p1.useSonar(p2,4,4));
     }
 
     @Test
@@ -181,7 +183,7 @@ public class PlayerTest {
 
         strikeBeforeSonar(p2);
         assertTrue(p1.canUseSonar(p2));
-        assertEquals(expectedBoard, p1.useSonar(p2,0,0));
+        assertArrayEquals(expectedBoard, p1.useSonar(p2,0,0));
     }
 }
 

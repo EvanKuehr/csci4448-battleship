@@ -1,5 +1,7 @@
 package edu.colorado.group18;
 
+import java.beans.PropertyChangeSupport;
+
 public class CaptainsQuarters extends ShipCell {
     boolean captainHit;
 
@@ -10,15 +12,18 @@ public class CaptainsQuarters extends ShipCell {
 
     public void setHitStatus(boolean newStatus) {
         if (newStatus) {
-            if (!super.getHitStatus()) {
+            if (!this.hit) {
                 if (this.captainHit) {
-                    super.setHitStatus((true));
-                } else {
+                    support.fireIndexedPropertyChange("hit", shipArrayIndex, hit, true);
+                    this.hit = true;
+                }
+                else {
                     this.captainHit = true;
                 }
             }
-        } else {
-            super.setHitStatus(newStatus);
+        }
+        else {
+            this.hit = newStatus;
         }
     }
 }

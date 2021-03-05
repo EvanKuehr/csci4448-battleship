@@ -1,9 +1,12 @@
 package edu.colorado.group18;
 
+import java.beans.IndexedPropertyChangeEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 
 
-public class Ship {
+public class Ship implements PropertyChangeListener {
     private String name;
     private int length;
     private boolean[] cells;
@@ -42,7 +45,7 @@ public class Ship {
         return this.captainsLocation;
     }
 
-    // helper function for hit()
+    // helper function for hit propertyChange function
     private boolean isSunk() {
         for (boolean cell : this.cells) {
             if (!cell) return false;
@@ -50,13 +53,24 @@ public class Ship {
         return true;
     }
 
+    //used for testing the ship class independently of the board
     public boolean hit(int index) {
-        this.cells[index] = true;
+        IndexedPropertyChangeEvent indexedEvt = new IndexedPropertyChangeEvent(new ShipCell(this,index),"hit", false, true, index);
+        propertyChange(indexedEvt);
         if (this.isSunk()) {
-            this.sunk = true;
             return true;
         }
         return false;
+    }
+
+    //runs when a corresponding ship cell is hit and updates the ship accordingly
+    public void propertyChange(PropertyChangeEvent evt) {
+        IndexedPropertyChangeEvent indexedEvt = (IndexedPropertyChangeEvent)evt;
+
+        this.cells[indexedEvt.getIndex()] = (boolean)indexedEvt.getNewValue();
+        if (this.isSunk()) {
+            this.sunk = true;
+        }
     }
 
     public boolean repair(int index) {

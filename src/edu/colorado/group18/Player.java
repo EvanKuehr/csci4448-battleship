@@ -154,6 +154,8 @@ public class Player {
         return retArray;
     }
 
+    /* TODO: this function will likely be called from public boolean[] strike(Player opponent, int y, int x, Card card)
+        when that function is implemented in a future milestone as one of our chosen features */
     public int[][] useSonar(Player opponent, int y, int x) {
         numSonars -= 1;
         return opponent.receiveSonar(y,x);

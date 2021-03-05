@@ -17,17 +17,17 @@ public class Player {
     }
 
     // GET METHODS
-    public double getBalance() {
-        return balance;
-    }
+//    public double getBalance() {
+//        return balance;
+//    }
 
-    public String[] getDeck() {
-        String[] abilities = new String[5];
-        for (int i = 0; i < deck.length; i++) {
-            abilities[i] = deck[i].ability;
-        }
-        return abilities;
-    }
+//    public String[] getDeck() {
+//        String[] abilities = new String[5];
+//        for (int i = 0; i < deck.length; i++) {
+//            abilities[i] = deck[i].ability;
+//        }
+//        return abilities;
+//    }
 
     public Ship[] getFleet() {
         return fleet;
@@ -59,33 +59,33 @@ public class Player {
         return success;
     }
 
-    public void buyCard(Card card) {
-        if (balance >= card.cost) {
-            balance -= card.cost;
-            Card[] newDeck = new Card[deck.length + 1];
-            int i = 0;
-            for (i = 0; i < deck.length; i++) {
-                newDeck[i] = deck[i];
-            }
-            newDeck[i] = card;
-            deck = newDeck;
-        }
-    }
+//    public void buyCard(Card card) {
+//        if (balance >= card.cost) {
+//            balance -= card.cost;
+//            Card[] newDeck = new Card[deck.length + 1];
+//            int i = 0;
+//            for (i = 0; i < deck.length; i++) {
+//                newDeck[i] = deck[i];
+//            }
+//            newDeck[i] = card;
+//            deck = newDeck;
+//        }
+//    }
 
-    public Card useCard(int index) {
-        return deck[index];
-    }
+//    public Card useCard(int index) {
+//        return deck[index];
+//    }
 
     public boolean[] strike(Player opponent, int y, int x) {
         return opponent.receiveStrike(y, x);
     }
 
-    public boolean[] strike(Player opponent, int y, int x, Card card) {
-        // TODO: attack using special ability
-        System.out.println(card.ability);
-        boolean[] retArray = {false,false};
-        return retArray;
-    }
+//    public boolean[] strike(Player opponent, int y, int x, Card card) {
+//        // TODO: attack using special ability
+//        System.out.println(card.ability);
+//        boolean[] retArray = {false,false};
+//        return retArray;
+//    }
 
     //returns a list of two booleans:
     //index 0: if a ship was hit

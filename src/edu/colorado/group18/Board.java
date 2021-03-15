@@ -26,6 +26,10 @@ public class Board {
 
     public Cell getCell(int row, int col) { return cells[row][col]; } // Return cell at coordinates (row, col)
 
+    public void SetCell(Cell cell, int row, int col) {
+        this.cells[row][col] = cell;
+    }
+
     public boolean placeShip(Ship ship, int row, int col, char orientation) { // Place ship at given coordinates
         boolean success = true;
         int captainIndex = ship.getCaptainsLocation();

@@ -13,7 +13,7 @@ public class CellTest {
 
     @Before
     public void setUp() {
-        testShip = new Ship("submarine", 3,-1);
+        testShip = new Ship("CustomShip", 3,-1);
         Cell cell = new ShipCell(testShip, 0);
         shipCell = (ShipCell)cell;
     }

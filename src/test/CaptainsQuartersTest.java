@@ -18,7 +18,7 @@ public class CaptainsQuartersTest {
     public void setUp() {
         int length = 3;
         int captainIndex = 0;
-        this.ship = new Ship("submarine", length, captainIndex);
+        this.ship = new Ship("CustomShip", length, captainIndex);
         // simulate Board
         this.board = new Cell[length];
         for(int i = 0; i < length; i++) {

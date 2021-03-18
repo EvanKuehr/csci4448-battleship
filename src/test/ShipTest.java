@@ -18,7 +18,7 @@ public class ShipTest {
 
     @Before
     public void setUp() {
-        ship = new Ship("submarine", 3,-1);
+        ship = new Ship("CustomShip", 3,-1);
     }
 
     // test constructor
@@ -29,7 +29,7 @@ public class ShipTest {
 
     @Test
     public void testGetName() {
-        assertEquals("submarine", ship.getName());
+        assertEquals("CustomShip", ship.getName());
     }
 
     @Test

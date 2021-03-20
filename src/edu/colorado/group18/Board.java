@@ -1,5 +1,7 @@
 package edu.colorado.group18;
 
+import java.util.HashMap;
+
 public class Board {
 
     private int rows; // Y-dimension
@@ -102,11 +104,11 @@ public class Board {
         return retArray;
     }
 
-    public boolean moveCell(Cell cell, char direction) { // moveFleet() helper
-//        boolean res = true;
+    public boolean moveCell(Cell cell, int row, int col, char direction) { // moveFleet() helper
+//        boolean success = true;
 //        switch (direction) {
 //            case 'n':
-//
+//                if (row > getY() - 2 || cells[row - 1][col]) { success = false; }
 //            case 'e':
 //
 //            case 's':
@@ -114,18 +116,19 @@ public class Board {
 //            case 'w':
 //
 //        }
-        return false;
+//        return success;
     }
 
     public void moveFleet(Player player, char direction) {
+
 //        for (int row = 0; row < cells.length; row++) {
 //            for (int col = 0; col < cells[row].length; col++) {
 //                Cell curCell = cells[row][col];
 //                if (curCell instanceof ShipCell) {
-//                    moveCell(curCell, direction);
+//                    moveCell(curCell, row, col, direction);
 //                }
 //            }
 //        }
-    }
+//    }
 
 }

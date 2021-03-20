@@ -28,41 +28,41 @@ public class PlayerTest {
 
     @Test
     public void checkPlaceValidHorizShip(){
-        assertTrue(p1.placeShip(p1.getFleet()[0], 0, 0, 'h'));
+        assertTrue(p1.placeShip(p1.getFleet()[0], 0, 0, 'h', false));
     }
 
     @Test
     public void checkPlaceInvalidHorizShip1(){ //Prevents out of bounds ship
-        assertFalse(p1.placeShip(p1.getFleet()[0], 0, 8, 'h'));
+        assertFalse(p1.placeShip(p1.getFleet()[0], 0, 8, 'h', false));
     }
 
     @Test
     public void checkPlaceInvalidHorizShip2(){ //Prevents placing ship on top of another
-        p1.placeShip(p1.getFleet()[0], 0, 0, 'h');
-        assertFalse(p1.placeShip(p1.getFleet()[1], 0, 0, 'h'));
+        p1.placeShip(p1.getFleet()[0], 0, 0, 'h', false);
+        assertFalse(p1.placeShip(p1.getFleet()[1], 0, 0, 'h', false));
     }
 
     @Test
     public void checkPlaceValidVertShip(){
-        assertTrue(p1.placeShip(p1.getFleet()[0], 0, 0, 'v'));
+        assertTrue(p1.placeShip(p1.getFleet()[0], 0, 0, 'v', false));
     }
 
     @Test //Prevents out of bounds ship
     public void checkPlaceInvalidVertShip1(){
-        assertFalse(p1.placeShip(p1.getFleet()[0], 9, 0, 'v'));
+        assertFalse(p1.placeShip(p1.getFleet()[0], 9, 0, 'v', false));
     }
 
     @Test //Prevents placing ship on top of another
     public void checkPlaceInvalidVertShip2(){
-        p1.placeShip(p1.getFleet()[0], 0, 0, 'v');
-        assertFalse(p1.placeShip(p1.getFleet()[1], 1, 0, 'v'));
+        p1.placeShip(p1.getFleet()[0], 0, 0, 'v', false);
+        assertFalse(p1.placeShip(p1.getFleet()[1], 1, 0, 'v', false));
     }
 
     @Test
     public void checkStrikeOpponent() {
         Ship[] fleet2 = {new Ship("ship3",2,-1)};
         Player p2 = new Player(fleet2);
-        p2.placeShip(p2.getFleet()[0], 0, 0, 'h');
+        p2.placeShip(p2.getFleet()[0], 0, 0, 'h', false);
 
         boolean[] results;
         results = p1.strike(p2, 0, 1);
@@ -74,7 +74,7 @@ public class PlayerTest {
     @Test
     public void checkMissStrike() {
         boolean[] results;
-        p1.placeShip(p1.getFleet()[0], 0, 7, 'v');
+        p1.placeShip(p1.getFleet()[0], 0, 7, 'v', false);
         results = p1.receiveStrike(0, 0);
         assertFalse(results[0]); //hit status
         assertFalse(results[1]); //sink status
@@ -83,7 +83,7 @@ public class PlayerTest {
     @Test
     public void checkHitStrike() {
         boolean[] results;
-        p1.placeShip(p1.getFleet()[0], 1, 3, 'h');
+        p1.placeShip(p1.getFleet()[0], 1, 3, 'h', false);
         results = p1.receiveStrike(1, 4);
         assertTrue(results[0]); //hit status
         assertFalse(results[1]); //sink status
@@ -92,7 +92,7 @@ public class PlayerTest {
     @Test
     public void checkSinkShip() {
         boolean[] results;
-        p1.placeShip(p1.getFleet()[0], 0, 9, 'v');
+        p1.placeShip(p1.getFleet()[0], 0, 9, 'v', false);
 
         results = p1.receiveStrike(1, 9);
         assertTrue(results[0]); //hit status
@@ -105,8 +105,8 @@ public class PlayerTest {
 
     @Test
     public void checkShouldSurrender() {
-        p1.placeShip(p1.getFleet()[0], 0, 0, 'h');
-        p1.placeShip(p1.getFleet()[1], 0, 2, 'h');
+        p1.placeShip(p1.getFleet()[0], 0, 0, 'h', false);
+        p1.placeShip(p1.getFleet()[1], 0, 2, 'h', false);
         for (int j=0; j < 5; j++) {
             assertFalse(p1.shouldSurrender());
             p1.receiveStrike(0, j);
@@ -118,9 +118,9 @@ public class PlayerTest {
     public Player createSonarEnemy() {
         Ship[] fleet = {new Ship("ship3",2,-1), new Ship("ship4", 3,-1), new Ship("ship5", 3,-1)};
         Player p = new Player(fleet);
-        p.placeShip(p.getFleet()[0], 3, 2, 'h');
-        p.placeShip(p.getFleet()[1], 5, 4, 'v');
-        p.placeShip(p.getFleet()[2], 0, 0, 'v');
+        p.placeShip(p.getFleet()[0], 3, 2, 'h', false);
+        p.placeShip(p.getFleet()[1], 5, 4, 'v', false);
+        p.placeShip(p.getFleet()[2], 0, 0, 'v', false);
         return p;
     }
 

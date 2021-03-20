@@ -10,8 +10,8 @@ public class Board {
         rows = y;
         cols = x;
         cells = new Cell[rows][cols];
-        for (int i=0; i < rows; i++) { //populate the array of cells with new cell objects
-            for (int j=0; j < cols; j++) {
+        for (int i = 0; i < rows; i++) { //populate the array of cells with new cell objects
+            for (int j = 0; j < cols; j++) {
                 cells[i][j] = new Cell();
             }
         }
@@ -22,9 +22,13 @@ public class Board {
         return rows;
     }
 
-    public int getX() { return cols; }
+    public int getX() {
+        return cols;
+    }
 
-    public Cell getCell(int row, int col) { return cells[row][col]; } // Return cell at coordinates (row, col)
+    public Cell getCell(int row, int col) {
+        return cells[row][col];
+    } // Return cell at coordinates (row, col)
 
     public void SetCell(Cell cell, int row, int col) {
         this.cells[row][col] = cell;
@@ -33,25 +37,50 @@ public class Board {
     public boolean placeShip(Ship ship, int row, int col, char orientation) { // Place ship at given coordinates
         boolean success = true;
         int captainIndex = ship.getCaptainsLocation();
-        if (orientation == 'h') { // Fill cells at and to the right of (col, row)
-            for (int j=col; j < ship.getLength()+col; j++) {
-                if (cells[row][j] instanceof ShipCell) {
-                    success = false; //can't place ships on top of each other
-                } else if (j == captainIndex+col && ship.getLength() > 2) {
-                    cells[row][j] = new CaptainsQuarters(ship,j-col);
-                } else {
-                    cells[row][j] = new ShipCell(ship,j-col);
+        if (ship instanceof Submarine) { // Check for non-linear ships
+            if (orientation == 'h') {
+                for (int j = col; j < col + ship.getLength(); j++) {
+                    if (cells[row][j] instanceof ShipCell) {
+                        success = false; //can't place ships on top of each other
+                    } else if (j == col + ship.getLength() - 2 && ship.getLength() > 2) {
+                        cells[row][j] = new CaptainsQuarters(ship, j - col);
+                    } else {
+                        cells[row][j] = new ShipCell(ship, j - col);
+                    }
+                    cells[row - 1][j - 1] = new ShipCell(ship, j + 1 - col);
+                }
+            } else {
+                for (int i = row; i < row + ship.getLength(); i++) {
+                    if (cells[i][col] instanceof ShipCell) {
+                        success = false; //can't place ships on top of each other
+                    } else if (i == row + ship.getLength() - 2 && ship.getLength() > 2) {
+                        cells[i][col] = new CaptainsQuarters(ship, i - row);
+                    } else {
+                        cells[i][col] = new ShipCell(ship, i - row);
+                    }
+                    cells[row - 1][col - 1] = new ShipCell(ship, i + 1 - row);
                 }
             }
-        }
-        else { // Fill cells at and below (row, col)
-            for (int i=row; i < ship.getLength()+row; i++) {
-                if (cells[i][col] instanceof ShipCell) {
-                    success = false; //can't place ships on top of each other
-                } else if (i == captainIndex+row && ship.getLength() > 2) {
-                    cells[i][col] = new CaptainsQuarters(ship,i-row);
-                } else {
-                    cells[i][col] = new ShipCell(ship,i-row);
+        } else {
+            if (orientation == 'h') { // Fill cells at and to the right of (col, row)
+                for (int j = col; j < ship.getLength() + col; j++) {
+                    if (cells[row][j] instanceof ShipCell) {
+                        success = false; //can't place ships on top of each other
+                    } else if (j == captainIndex + col && ship.getLength() > 2) {
+                        cells[row][j] = new CaptainsQuarters(ship, j - col);
+                    } else {
+                        cells[row][j] = new ShipCell(ship, j - col);
+                    }
+                }
+            } else { // Fill cells at and below (row, col)
+                for (int i = row; i < ship.getLength() + row; i++) {
+                    if (cells[i][col] instanceof ShipCell) {
+                        success = false; //can't place ships on top of each other
+                    } else if (i == captainIndex + row && ship.getLength() > 2) {
+                        cells[i][col] = new CaptainsQuarters(ship, i - row);
+                    } else {
+                        cells[i][col] = new ShipCell(ship, i - row);
+                    }
                 }
             }
         }
@@ -65,12 +94,38 @@ public class Board {
 
         cell.setHitStatus(true); //the cell was targeted/hit, if it is a ShipCell, the corresponding Ship will listen for the change and update accordingly
         if (cell instanceof ShipCell) { //cell is occupied with a part of a ship
-            ShipCell shipCell = (ShipCell)cell; //cast the Cell to a ShipCell
+            ShipCell shipCell = (ShipCell) cell; //cast the Cell to a ShipCell
             sinkStatus = shipCell.getShipRef().getSunk(); //knows if the ship is sunk
             hitShip = true;
         }
-        boolean[] retArray = {hitShip,sinkStatus};
+        boolean[] retArray = {hitShip, sinkStatus};
         return retArray;
+    }
+
+    public boolean moveCell(Cell cell, char direction) { // moveFleet() helper
+//        boolean res = true;
+//        switch (direction) {
+//            case 'n':
+//
+//            case 'e':
+//
+//            case 's':
+//
+//            case 'w':
+//
+//        }
+        return false;
+    }
+
+    public void moveFleet(Player player, char direction) {
+//        for (int row = 0; row < cells.length; row++) {
+//            for (int col = 0; col < cells[row].length; col++) {
+//                Cell curCell = cells[row][col];
+//                if (curCell instanceof ShipCell) {
+//                    moveCell(curCell, direction);
+//                }
+//            }
+//        }
     }
 
 }

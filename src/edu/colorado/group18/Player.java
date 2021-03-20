@@ -6,6 +6,7 @@ public class Player {
     private Card[] deck;
     private Ship[] fleet;
     private Board board;
+    private SubBoard subBoard;
     private int numSonars;
 
     public Player(Ship[] fleet) {
@@ -13,6 +14,7 @@ public class Player {
         this.deck = new Card[5];
         this.fleet = fleet;
         this.board = new Board(10, 10);
+        this.subBoard = new SubBoard(board.getY(), board.getX());
         this.numSonars = 2;
     }
 
@@ -37,21 +39,60 @@ public class Player {
         return board;
     }
 
-    public boolean placeShip(Ship ship, int y, int x, char orient) {
+    public SubBoard getSubBoard() {
+        return subBoard;
+    }
+
+    public boolean placeShip(Ship ship, int y, int x, char orient, boolean submerged) {
         boolean success = false;
         if (!ship.placed) {
-            if (orient == 'v') {
-                if (x < board.getX() && y < board.getY() - ship.getLength()) {
-                    if (board.placeShip(ship, y, x, orient)) {
-                        ship.placed = true;
-                        success = true;
+            if (ship instanceof Submarine) { // Check for non-linear ships
+                if (orient == 'v') {
+                    if (x > 0 && x < board.getX() && y < board.getY() - (ship.getLength() - 1)) {
+                        if (submerged && subBoard.placeShip(ship, y, x, orient)) {
+                            ship.placed = true;
+                            success = true;
+                        }
+                        else if (!submerged && board.placeShip(ship, y, x, orient)) {
+                            ship.placed = true;
+                            success = true;
+                        }
+                    }
+                } else if (orient == 'h') {
+                    if (x < board.getX() - (ship.getLength() - 1) && y < board.getY() - 2) {
+                        if (submerged && subBoard.placeShip(ship, y, x, orient)) {
+                            ship.placed = true;
+                            success = true;
+                        }
+                        else if (!submerged && board.placeShip(ship, y, x, orient)) {
+                            ship.placed = true;
+                            success = true;
+                        }
                     }
                 }
-            } else if (orient == 'h') {
-                if (x < board.getX() - ship.getLength() && y < board.getY()) {
-                    if(board.placeShip(ship, y, x, orient)) {
-                        ship.placed = true;
-                        success = true;
+            }
+            else {
+                if (orient == 'v') {
+                    if (x < board.getX() && y < board.getY() - ship.getLength()) {
+                        if (submerged && subBoard.placeShip(ship, y, x, orient)) {
+                            ship.placed = true;
+                            success = true;
+                        }
+                        else if (!submerged && board.placeShip(ship, y, x, orient)) {
+                            ship.placed = true;
+                            success = true;
+                        }
+                    }
+                } else if (orient == 'h') {
+                    if (x < board.getX() - ship.getLength() && y < board.getY()) {
+                        if (submerged && subBoard.placeShip(ship, y, x, orient)) {
+                            ship.placed = true;
+                            success = true;
+                        }
+                        else if (!submerged && board.placeShip(ship, y, x, orient)) {
+                            ship.placed = true;
+                            success = true;
+                        }
                     }
                 }
             }

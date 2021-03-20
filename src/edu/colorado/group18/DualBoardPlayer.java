@@ -1,2 +1,8 @@
 package edu.colorado.group18;
-import java.util.Arrays;
+
+
+public class DualBoardPlayer extends Player {
+	
+	private Board SubBoard;
+	
+}

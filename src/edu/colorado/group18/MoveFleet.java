@@ -1,13 +1,41 @@
 package edu.colorado.group18;
 
 import java.util.HashMap;
+import java.util.Stack;
 
 public class MoveFleet extends Ability {
+    private Stack <Command> undoStack;
+    private Stack <Command> redoStack;
+    private DualBoardPlayer player;
 
-    public Board[] use(DualBoardPlayer self, char direction) {
-        moveFleet(self, direction, self.getBoard());
-        moveFleet(self, direction, self.getSubBoard());
-        return new Board[]{self.getBoard(), self.getSubBoard()};
+    public MoveFleet(DualBoardPlayer p) {
+        undoStack = new Stack <Command>();
+        redoStack = new Stack <Command>();
+        player = p;
+    }
+
+    public DualBoardPlayer getPlayer() { return player; }
+
+    public Board[] use(Command moveCommand) {
+        moveCommand.execute();
+        undoStack.push(moveCommand);
+        return new Board[]{ player.getBoard(), player.getSubBoard() };
+    }
+
+    public void undoMove() {
+        if (!undoStack.empty()) {
+            Command lastMove = undoStack.pop();
+            lastMove.undo();
+            redoStack.push(lastMove);
+        }
+    }
+
+    public void redoMove() {
+        if (!redoStack.empty()) {
+            Command lastUndoneMove = redoStack.pop();
+            lastUndoneMove.execute();
+            undoStack.push(lastUndoneMove);
+        }
     }
 
     class Tuple<X, Y> {
@@ -47,7 +75,7 @@ public class MoveFleet extends Ability {
         return result;
     }
 
-    private void moveFleet(Player player, char direction, Board board) {
+    public void moveFleet(char direction, Board board) {
         boolean canMoveFleet = true;
         for (int y = 0; y < board.getY(); y++) {
             for (int x = 0; x < board.getX(); x++) {

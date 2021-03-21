@@ -79,52 +79,60 @@ public class AbilityTest {
     @Test
     public void testMoveFleetNorth() {
         moveFleetInit();
-        MoveFleet mf = new MoveFleet();
+        MoveFleet mf = new MoveFleet(player);
         ShipCell cell = (ShipCell) player.getBoard().getCell(1, 1);
-        Board[] boards = mf.use(player, 'n');
+        Board[] boards = mf.use(new MoveNorthCommand(mf));
+        mf.undoMove();
+        mf.redoMove();
         assertTrue(cell.equals(boards[0].getCell(0,1)));
 
         Board firstBoard = boards[0];
-        boards = mf.use(player, 'n'); //Can't move fleet, it would be out of bounds
+        boards = mf.use(new MoveNorthCommand(mf)); //Can't move fleet, it would be out of bounds
         assertEquals(firstBoard, boards[0]);
     }
 
     @Test
     public void testMoveFleetEast() {
         moveFleetInit();
-        MoveFleet mf = new MoveFleet();
+        MoveFleet mf = new MoveFleet(player);
         ShipCell cell = (ShipCell) player.getBoard().getCell(1, 1);
-        Board[] boards = mf.use(player, 'e');
+        Board[] boards = mf.use(new MoveEastCommand(mf));
+        mf.undoMove();
+        mf.redoMove();
         assertTrue(cell.equals(boards[0].getCell(1,2)));
 
         Board firstBoard = boards[0];
-        boards = mf.use(player, 'e'); //Can't move fleet, it would be out of bounds
+        boards = mf.use(new MoveEastCommand(mf)); //Can't move fleet, it would be out of bounds
         assertEquals(firstBoard, boards[0]);
     }
 
     @Test
     public void testMoveFleetSouth() {
         moveFleetInit();
-        MoveFleet mf = new MoveFleet();
+        MoveFleet mf = new MoveFleet(player);
         ShipCell cell = (ShipCell) player.getBoard().getCell(1, 1);
-        Board[] boards = mf.use(player, 's');
+        Board[] boards = mf.use(new MoveSouthCommand(mf));
+        mf.undoMove();
+        mf.redoMove();
         assertTrue(cell.equals(boards[0].getCell(2,1)));
 
         Board firstBoard = boards[0];
-        boards = mf.use(player, 's'); //Can't move fleet, it would be out of bounds
+        boards = mf.use(new MoveSouthCommand(mf)); //Can't move fleet, it would be out of bounds
         assertEquals(firstBoard, boards[0]);
     }
 
     @Test
     public void testMoveFleetWest() {
         moveFleetInit();
-        MoveFleet mf = new MoveFleet();
+        MoveFleet mf = new MoveFleet(player);
         ShipCell cell = (ShipCell) player.getBoard().getCell(1, 1);
-        Board[] boards = mf.use(player, 'w');
+        Board[] boards = mf.use(new MoveWestCommand(mf));
+        mf.undoMove();
+        mf.redoMove();
         assertTrue(cell.equals(boards[0].getCell(1,0)));
 
         Board firstBoard = boards[0];
-        boards = mf.use(player, 'w'); //Can't move fleet, it would be out of bounds
+        boards = mf.use(new MoveWestCommand(mf)); //Can't move fleet, it would be out of bounds
         assertEquals(firstBoard, boards[0]);
     }
 }

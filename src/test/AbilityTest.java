@@ -12,11 +12,17 @@ public class AbilityTest {
 
     @Before
     public void setUp() {
-        Ship[] fleet = {new Ship("ship1",2,-1), new Ship("ship2", 5,3)};
+        Ship[] fleet = {
+                new Ship("ship1",2,-1),
+                new Ship("ship2", 5,3),
+                new Ship("ship3", 5, 3)
+        };
         fleet[1] = new Submarine();
+        fleet[2] = new Submarine();
         this.player = new Player(fleet);
         this.player.placeShip(this.player.getFleet()[0], 1, 1, 'h', false);
         this.player.placeShip(this.player.getFleet()[1], 2, 2, 'h', true);
+        this.player.placeShip(this.player.getFleet()[2], 8, 8, 'v', false);
     }
 
     @Test

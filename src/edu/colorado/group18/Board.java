@@ -114,7 +114,7 @@ public class Board {
         return retArray;
     }
 
-    public boolean canMove(Tuple<Integer, Integer> coord, char direction, Player player, HashMap<Ship, ArrayList<Tuple<Integer, Integer>>> shipMap) { // moveFleet() helper
+    public boolean canMove(Tuple<Integer, Integer> coord, char direction, HashMap<Ship, ArrayList<Tuple<Integer, Integer>>> shipMap) { // moveFleet() helper
         boolean res = true;
 
         switch (direction) {
@@ -163,7 +163,7 @@ public class Board {
             if (shipMap.get(ship) != null) {
                 for (Tuple<Integer, Integer> coord : shipMap.get(ship)) {
                     System.out.println(shipMap.get(ship).get(0));
-                    if (!canMove(coord, direction, player, shipMap)) {
+                    if (!canMove(coord, direction, shipMap)) {
                         flag = false;
                         break;
                     }

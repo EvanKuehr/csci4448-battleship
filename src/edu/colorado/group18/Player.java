@@ -7,7 +7,6 @@ public class Player {
     private Card[] deck;
     private Ship[] fleet;
     private Board board;
-    private SubBoard subBoard;
     private int numSonars;
 
     public Player(Ship[] fleet) {
@@ -15,7 +14,6 @@ public class Player {
         this.deck = new Card[5];
         this.fleet = fleet;
         this.board = new Board(10, 10);
-        this.subBoard = new SubBoard(board.getY(), board.getX());
         this.numSonars = 2;
     }
 
@@ -40,60 +38,31 @@ public class Player {
         return board;
     }
 
-    public SubBoard getSubBoard() {
-        return subBoard;
+    public boolean decrementSonars() {
+        if (numSonars > 0) {
+            numSonars -= 1;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    public boolean placeShip(Ship ship, int y, int x, char orient, boolean submerged) {
+    public boolean placeShip(Ship ship, int y, int x, char orient) {
         boolean success = false;
         if (!ship.placed) {
-            if (ship instanceof Submarine) { // Check for non-linear ships
-                if (orient == 'v') {
-                    if (x > 0 && x < board.getX() && y < board.getY() - (ship.getLength() - 1)) {
-                        if (submerged && subBoard.placeShip(ship, y, x, orient)) {
-                            ship.placed = true;
-                            success = true;
-                        }
-                        else if (!submerged && board.placeShip(ship, y, x, orient)) {
-                            ship.placed = true;
-                            success = true;
-                        }
-                    }
-                } else if (orient == 'h') {
-                    if (x < board.getX() - (ship.getLength() - 1) && y < board.getY() - 2) {
-                        if (submerged && subBoard.placeShip(ship, y, x, orient)) {
-                            ship.placed = true;
-                            success = true;
-                        }
-                        else if (!submerged && board.placeShip(ship, y, x, orient)) {
-                            ship.placed = true;
-                            success = true;
-                        }
+            if (orient == 'v') {
+                if (x < board.getX() && y < board.getY() - ship.getLength()) {
+                    if (board.placeShip(ship, y, x, orient)) {
+                        ship.placed = true;
+                        success = true;
                     }
                 }
-            }
-            else {
-                if (orient == 'v') {
-                    if (x < board.getX() && y < board.getY() - ship.getLength()) {
-                        if (submerged && subBoard.placeShip(ship, y, x, orient)) {
-                            ship.placed = true;
-                            success = true;
-                        }
-                        else if (!submerged && board.placeShip(ship, y, x, orient)) {
-                            ship.placed = true;
-                            success = true;
-                        }
-                    }
-                } else if (orient == 'h') {
-                    if (x < board.getX() - ship.getLength() && y < board.getY()) {
-                        if (submerged && subBoard.placeShip(ship, y, x, orient)) {
-                            ship.placed = true;
-                            success = true;
-                        }
-                        else if (!submerged && board.placeShip(ship, y, x, orient)) {
-                            ship.placed = true;
-                            success = true;
-                        }
+            } else if (orient == 'h') {
+                if (x < board.getX() - ship.getLength() && y < board.getY()) {
+                    if(board.placeShip(ship, y, x, orient)) {
+                        ship.placed = true;
+                        success = true;
                     }
                 }
             }
@@ -158,48 +127,5 @@ public class Player {
             }
         }
         return retVal;
-    }
-
-    public boolean canUseSonar(Player opponent) {
-        boolean retVal = false;
-        if (opponent.hasSunkenShip()) {
-            if (numSonars > 0) {
-                retVal = true;
-            }
-        }
-        return retVal;
-    }
-
-    public int[][] receiveSonar(int y, int x) {
-        int yDim = board.getY();
-        int xDim = board.getX();
-        int[][] retArray = new int[yDim][xDim];
-
-        for (int[] row : retArray) {
-            Arrays.fill(row,-1); //-1 represents parts not in the sonar
-        }
-
-        for (int j = y-2; j <= y+2; j++) {
-            for (int i = x-2; i <= x+2; i++) {
-                if (j >= 0 && i >= 0) { //if not out of bounds
-                    if (Math.abs(j - y) + Math.abs(i - x) <= 2) { //if at most 2 cells away from the sonar's origin
-                        if (board.getCell(j,i) instanceof ShipCell) { //if the cell contains part of a ship
-                            retArray[j][i] = 2; //2 represents part of a ship
-                        }
-                        else {
-                            retArray[j][i] = 0; //0 represents a part of the sonar but not a ship
-                        }
-                    }
-                }
-            }
-        }
-        return retArray;
-    }
-
-    /* TODO: this function will likely be called from public boolean[] strike(Player opponent, int y, int x, Card card)
-        when that function is implemented in a future milestone as one of our chosen features */
-    public int[][] useSonar(Player opponent, int y, int x) {
-        numSonars -= 1;
-        return opponent.receiveSonar(y,x);
     }
 }

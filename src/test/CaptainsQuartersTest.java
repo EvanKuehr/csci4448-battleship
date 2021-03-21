@@ -44,5 +44,7 @@ public class CaptainsQuartersTest {
         this.board[captain].setHitStatus(true);
 
         assertTrue("captain hit twice, should be dead", this.board[captain].getHitStatus());
+
+       this.board[captain].setHitStatus(false);
     }
 }

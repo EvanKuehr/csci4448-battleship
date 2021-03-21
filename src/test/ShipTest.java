@@ -1,6 +1,6 @@
 package test;
 
-import edu.colorado.group18.Ship;
+import edu.colorado.group18.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -86,6 +86,14 @@ public class ShipTest {
     public void testRepairSunken() {
         sinkShip();
         assertFalse(ship.repair(0));
+    }
+
+    @Test
+    public void testCustomShips() {
+        assertEquals("Battleship", new Battleship().getName());
+        assertEquals("Destroyer", new Destroyer().getName());
+        assertEquals("Minesweeper", new Minesweeper().getName());
+        assertEquals("Submarine", new Submarine().getName());
     }
 
 

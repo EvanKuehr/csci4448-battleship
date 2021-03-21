@@ -1,16 +1,7 @@
 package edu.colorado.group18;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
-class Tuple<X, Y> {
-    public X x;
-    public Y y;
-    public Tuple(X x, Y y) {
-        this.x = x;
-        this.y = y;
-    }
-}
+import java.util.ArrayList;
 
 public class Board {
 
@@ -113,72 +104,6 @@ public class Board {
         boolean[] retArray = {hitShip, sinkStatus};
         return retArray;
     }
-
-    public boolean canMove(Tuple<Integer, Integer> coord, char direction, HashMap<Ship, ArrayList<Tuple<Integer, Integer>>> shipMap) { // moveFleet() helper
-        boolean res = true;
-
-        switch (direction) {
-            case 'n': // -Y
-                if (coord.y > getY() - 2 || (cells[coord.y - 1][coord.x] instanceof ShipCell && !shipMap.get(((ShipCell) cells[coord.y][coord.x]).getShipRef()).contains(new Tuple<>(coord.x, coord.y - 1)))) { res = false; }
-                break;
-            case 'e': // +X
-                if (coord.x > getX() - 2 || (cells[coord.y][coord.x + 1] instanceof ShipCell && !shipMap.get(((ShipCell) cells[coord.y][coord.x]).getShipRef()).contains(new Tuple<>(coord.x + 1, coord.y)))) { res = false; }
-                break;
-            case 's': // +Y
-                if (coord.y < 1 || (cells[coord.y + 1][coord.x] instanceof ShipCell && !shipMap.get(((ShipCell) cells[coord.y][coord.x]).getShipRef()).contains(new Tuple<>(coord.x, coord.y + 1)))) { res = false; }
-                break;
-            case 'w': // -X
-                if (coord.x < 1|| (cells[coord.y][coord.x - 1] instanceof ShipCell && !shipMap.get(((ShipCell) cells[coord.y][coord.x]).getShipRef()).contains(new Tuple<>(coord.x - 1, coord.y)))) { res = false; }
-                break;
-            default: break;
-        }
-        return res;
-    }
-
-    public void moveFleet(Player player, char direction) {
-
-        HashMap<Ship, ArrayList<Tuple<Integer, Integer>>> shipMap = new HashMap<>(); // Map between each ship and its cells' coordinates
-
-        HashMap<Character, Tuple<Integer, Integer>> dirMap = new HashMap<>(); // Map between direction <-> delta X/Y
-        dirMap.put('n', new Tuple<>(0, 1));
-        dirMap.put('e', new Tuple<>(1, 0));
-        dirMap.put('s', new Tuple<>(0, -1));
-        dirMap.put('w', new Tuple<>(-1, 0));
-
-        for (int row = 0; row < cells.length; row++) { // Build shipMap
-            for (int col = 0; col < cells[row].length; col++) {
-                Cell curCell = cells[row][col];
-                if (curCell instanceof ShipCell) {
-                    Ship ship = ((ShipCell) curCell).getShipRef();
-                    if (!shipMap.containsKey(ship)) {
-                        shipMap.put(ship, new ArrayList<>());
-                    }
-                    shipMap.get(ship).add(new Tuple<>(col, row));
-                }
-            }
-        }
-
-        for (Ship ship : player.getFleet()) { // Verify all ShipCells can move
-            boolean flag = true;
-            if (shipMap.get(ship) != null) {
-                for (Tuple<Integer, Integer> coord : shipMap.get(ship)) {
-                    System.out.println(shipMap.get(ship).get(0));
-                    if (!canMove(coord, direction, shipMap)) {
-                        flag = false;
-                        break;
-                    }
-                }
-                if (flag) { // Move cells + update coordinates
-                    for (Tuple<Integer, Integer> coord : shipMap.get(ship)) {
-                        Tuple<Integer, Integer> old_coords = new Tuple<>(coord.x, coord.y);
-                        coord.x += dirMap.get(direction).x;
-                        coord.y += dirMap.get(direction).y;
-                        SetCell(cells[old_coords.y][old_coords.x], coord.y, coord.x);
-                        SetCell(new Cell(), old_coords.y, old_coords.x);
-                    }
-                }
-            }
-        }
-
-    }
 }
+
+

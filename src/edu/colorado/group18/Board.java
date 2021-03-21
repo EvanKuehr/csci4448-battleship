@@ -160,19 +160,22 @@ public class Board {
 
         for (Ship ship : player.getFleet()) { // Verify all ShipCells can move
             boolean flag = true;
-            for (Tuple<Integer, Integer> coord : shipMap.get(ship)) {
-                if (!canMove(coord, direction, player, shipMap)) {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag) { // Move cells + update coordinates
+            if (shipMap.get(ship) != null) {
                 for (Tuple<Integer, Integer> coord : shipMap.get(ship)) {
-                    Tuple<Integer, Integer> old_coords = new Tuple<>(coord.x, coord.y);
-                    coord.x += dirMap.get(direction).x;
-                    coord.y += dirMap.get(direction).y;
-                    SetCell(cells[coord.y][coord.x], coord.y, coord.x);
-                    SetCell(new Cell(), old_coords.y, old_coords.x);
+                    System.out.println(shipMap.get(ship).get(0));
+                    if (!canMove(coord, direction, player, shipMap)) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) { // Move cells + update coordinates
+                    for (Tuple<Integer, Integer> coord : shipMap.get(ship)) {
+                        Tuple<Integer, Integer> old_coords = new Tuple<>(coord.x, coord.y);
+                        coord.x += dirMap.get(direction).x;
+                        coord.y += dirMap.get(direction).y;
+                        SetCell(cells[old_coords.y][old_coords.x], coord.y, coord.x);
+                        SetCell(new Cell(), old_coords.y, old_coords.x);
+                    }
                 }
             }
         }

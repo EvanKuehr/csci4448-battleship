@@ -1,10 +1,10 @@
 package test;
 
-import static org.junit.Assert.*;
-
 import edu.colorado.group18.Ship;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class ShipTest {
     private Ship ship;
@@ -17,9 +17,7 @@ public class ShipTest {
     }
 
     @Before
-    public void setUp() {
-        ship = new Ship("CustomShip", 3,-1);
-    }
+    public void setUp() { ship = new Ship("CustomShip", 3,-1); }
 
     // test constructor
     @Test

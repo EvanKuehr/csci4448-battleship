@@ -1,13 +1,6 @@
 package test;
 
-import edu.colorado.group18.Missile;
-import edu.colorado.group18.Sonar;
-import edu.colorado.group18.SonarCell;
-import edu.colorado.group18.SpaceLazer;
-import edu.colorado.group18.Board;
-import edu.colorado.group18.Player;
-import edu.colorado.group18.Ship;
-import edu.colorado.group18.Submarine;
+import edu.colorado.group18.*;
 
 import org.junit.Test;
 import org.junit.Before;
@@ -19,7 +12,7 @@ public class AbilityTest {
 
     @Before
     public void setUp() {
-        Ship[] fleet = {new Ship("ship1",2,-1), new Ship("ship2", 3,1)};
+        Ship[] fleet = {new Ship("ship1",2,-1), new Ship("ship2", 5,3)};
         fleet[1] = new Submarine();
         this.player = new Player(fleet);
         this.player.placeShip(this.player.getFleet()[0], 1, 1, 'h', false);
@@ -66,4 +59,15 @@ public class AbilityTest {
         assertTrue(firstCell.hasShip == 0);
         assertTrue(secondCell.hasShip == 1);
     }
+
+    @Test
+    public void testMoveFleet() {
+        MoveFleet mf = new MoveFleet();
+        Board[] boards = mf.use(this.player, 'e');
+        ShipCell firstCell = (ShipCell) boards[0].getCell(1, 2);
+        ShipCell secondCell = (ShipCell) boards[1].getCell(2, 3);
+        assertTrue(firstCell.getShipRef() == player.getFleet()[0]);
+        assertTrue(secondCell.getShipRef() == player.getFleet()[1]);
+    }
+
 }

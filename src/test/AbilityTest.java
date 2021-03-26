@@ -13,12 +13,12 @@ public class AbilityTest {
     @Before
     public void setUp() {
         Ship[] fleet = {
-                new Ship("ship1",2,-1),
+                new Battleship(),
                 new Submarine()
         };
         this.player = new DualBoardPlayer(fleet);
         this.player.placeShip(this.player.getFleet()[0], 1, 1, 'h', false);
-        this.player.placeShip(this.player.getFleet()[1], 2, 2, 'h', true);
+        this.player.placeShip(this.player.getFleet()[1], 2, 1, 'v', true);
     }
 
     @Test
@@ -46,8 +46,11 @@ public class AbilityTest {
     @Test
     public void testSpaceLazer() {
         SpaceLazer spacelazer = new SpaceLazer();
-        Board[] boards = spacelazer.use(this.player, 2, 2);
-        assertTrue(boards[1].getCell(2, 2).getHitStatus());
+        spacelazer.use(this.player, 1, 2);
+        Boolean surfaceShipHit = this.player.getFleet()[0].getCells()[1];
+        Boolean subShipHit = this.player.getFleet()[1].getCells()[0];
+        assertTrue("surface ship not hit", surfaceShipHit);
+        assertTrue("sub-surface ship not hit", subShipHit);
     }
 
     @Test

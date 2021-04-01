@@ -22,6 +22,11 @@ public class AbilityTest {
     }
 
     @Test
+    public void placeSub() {
+        assertTrue(this.player.getBoard().getCell(2, 1) instanceof ShipCell);
+    }
+
+    @Test
     public void testMissileHit() {
         Missile missile = new Missile();
         Board board = missile.use(this.player, 1, 1);

@@ -2,16 +2,16 @@ package edu.colorado.group18;
 
 public class DualBoardPlayer extends Player {
 
-	private SubBoard subBoard;
+	private Board subBoard;
 	private Board board;
 
 	public DualBoardPlayer(Ship[] fleet) {
 		super(fleet);
-		this.subBoard = new SubBoard(10,10);
+		this.subBoard = new Board(10,10);
 		this.board = new Board(10,10);
 	}
 
-	public SubBoard getSubBoard() {
+	public Board getSubBoard() {
 		return subBoard;
 	}
 

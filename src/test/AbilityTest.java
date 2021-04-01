@@ -18,12 +18,12 @@ public class AbilityTest {
         };
         this.player = new DualBoardPlayer(fleet);
         this.player.placeShip(this.player.getFleet()[0], 1, 1, 'h', false);
-        this.player.placeShip(this.player.getFleet()[1], 2, 1, 'v', true);
+        this.player.placeShip(this.player.getFleet()[1], 1, 2, 'v', true);
     }
 
     @Test
     public void placeSub() {
-        assertTrue(this.player.getBoard().getCell(2, 1) instanceof ShipCell);
+        assertTrue(this.player.getSubBoard().getCell(1, 2) instanceof ShipCell);
     }
 
     @Test
@@ -54,8 +54,8 @@ public class AbilityTest {
         spacelazer.use(this.player, 1, 2);
         Boolean surfaceShipHit = this.player.getFleet()[0].getCells()[1];
         Boolean subShipHit = this.player.getFleet()[1].getCells()[0];
-        assertTrue("surface ship not hit", surfaceShipHit);
         assertTrue("sub-surface ship not hit", subShipHit);
+        assertTrue("surface ship not hit", surfaceShipHit);
     }
 
     @Test
@@ -142,5 +142,45 @@ public class AbilityTest {
         Board firstBoard = boards[0];
         boards = mf.use(new MoveWestCommand(mf)); //Can't move fleet, it would be out of bounds
         assertEquals(firstBoard, boards[0]);
+    }
+
+    @Test
+    public void testSurfaceBoardMiss() {
+        int row = 8;
+        Torpedo torpedo = new Torpedo();
+        Board board = torpedo.use(this.player, row, true);
+        Cell cell = board.getCell(row, board.getY()-1);
+        assertTrue("cell wasn't hit", cell.getHitStatus());
+        assertFalse("there shouldn't be a ship there", cell instanceof ShipCell);
+    }
+
+    @Test
+    public void testSubBoardMiss() {
+        int row = 8;
+        Torpedo torpedo = new Torpedo();
+        Board board = torpedo.use(this.player, row, false);
+        Cell cell = board.getCell(row, board.getY()-1);
+        assertTrue("cell wasn't hit", cell.getHitStatus());
+        assertFalse("there shouldn't be a ship there", cell instanceof ShipCell);
+    }
+
+    @Test
+    public void testSurfaceBoardHit() {
+        int row = 1;
+        Torpedo torpedo = new Torpedo();
+        Board board = torpedo.use(this.player, row, true);
+        Cell cell = board.getCell(row, 1);
+        assertTrue("cell wasn't hit", cell.getHitStatus());
+        assertTrue("there should be a ship there", cell instanceof ShipCell);
+    }
+
+    @Test
+    public void testSubBoardHit() {
+        int row = 2;
+        Torpedo torpedo = new Torpedo();
+        Board board = torpedo.use(this.player, row, false);
+        Cell cell = board.getCell(row, 2);
+        assertTrue("cell wasn't hit", cell.getHitStatus());
+        assertTrue("there should be a ship there", cell instanceof ShipCell);
     }
 }

@@ -1,8 +1,6 @@
 package edu.colorado.group18;
 
 
-import java.util.ArrayList;
-
 public class Board {
 
     private int rows; // Y-dimension
@@ -40,50 +38,24 @@ public class Board {
     public boolean placeShip(Ship ship, int row, int col, char orientation) { // Place ship at given coordinates
         boolean success = true;
         int captainIndex = ship.getCaptainsLocation();
-        if (ship instanceof Submarine) { // Check for non-linear ships
-            if (orientation == 'h') {
-                for (int j = col; j < col + ship.getLength(); j++) {
-                    if (cells[row][j] instanceof ShipCell) {
-                        success = false; //can't place ships on top of each other
-                    } else if (j == col + ship.getLength() - 2 && ship.getLength() > 2) {
-                        cells[row][j] = new CaptainsQuarters(ship, j - col);
-                    } else {
-                        cells[row][j] = new ShipCell(ship, j - col);
-                    }
-                    cells[row - 1][j - 1] = new ShipCell(ship, j + 1 - col);
-                }
-            } else {
-                for (int i = row; i < row + ship.getLength(); i++) {
-                    if (cells[i][col] instanceof ShipCell) {
-                        success = false; //can't place ships on top of each other
-                    } else if (i == row + ship.getLength() - 2 && ship.getLength() > 2) {
-                        cells[i][col] = new CaptainsQuarters(ship, i - row);
-                    } else {
-                        cells[i][col] = new ShipCell(ship, i - row);
-                    }
-                    cells[row - 1][col - 1] = new ShipCell(ship, i + 1 - row);
+        if (orientation == 'h') { // Fill cells at and to the right of (col, row)
+            for (int j = col; j < ship.getLength() + col; j++) {
+                if (cells[row][j] instanceof ShipCell) {
+                    success = false; //can't place ships on top of each other
+                } else if (j == captainIndex + col && ship.getLength() > 2) {
+                    cells[row][j] = new CaptainsQuarters(ship, j - col);
+                } else {
+                    cells[row][j] = new ShipCell(ship, j - col);
                 }
             }
-        } else {
-            if (orientation == 'h') { // Fill cells at and to the right of (col, row)
-                for (int j = col; j < ship.getLength() + col; j++) {
-                    if (cells[row][j] instanceof ShipCell) {
-                        success = false; //can't place ships on top of each other
-                    } else if (j == captainIndex + col && ship.getLength() > 2) {
-                        cells[row][j] = new CaptainsQuarters(ship, j - col);
-                    } else {
-                        cells[row][j] = new ShipCell(ship, j - col);
-                    }
-                }
-            } else { // Fill cells at and below (row, col)
-                for (int i = row; i < ship.getLength() + row; i++) {
-                    if (cells[i][col] instanceof ShipCell) {
-                        success = false; //can't place ships on top of each other
-                    } else if (i == captainIndex + row && ship.getLength() > 2) {
-                        cells[i][col] = new CaptainsQuarters(ship, i - row);
-                    } else {
-                        cells[i][col] = new ShipCell(ship, i - row);
-                    }
+        } else { // Fill cells at and below (row, col)
+            for (int i = row; i < ship.getLength() + row; i++) {
+                if (cells[i][col] instanceof ShipCell) {
+                    success = false; //can't place ships on top of each other
+                } else if (i == captainIndex + row && ship.getLength() > 2) {
+                    cells[i][col] = new CaptainsQuarters(ship, i - row);
+                } else {
+                    cells[i][col] = new ShipCell(ship, i - row);
                 }
             }
         }

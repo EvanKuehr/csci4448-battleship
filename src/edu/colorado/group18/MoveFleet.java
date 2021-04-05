@@ -47,26 +47,26 @@ public class MoveFleet extends Ability {
         }
     }
 
-    private boolean canMove(int y, int x, char direction, Board board) { //helper for moveFleet()
+    private boolean canMove(int y, int x, Direction direction, Board board) { //helper for moveFleet()
         boolean result = true;
 
         switch(direction) {
-            case 'n': // -Y
+            case NORTH: // -Y
                 if (y-1 < 0) {
                     result = false;
                 }
                 break;
-            case 'e': // +X
+            case EAST: // +X
                 if (x+1 >= board.getX()) {
                     result = false;
                 }
                 break;
-            case 's': // +Y
+            case SOUTH: // +Y
                 if (y+1 >= board.getY()) {
                     result = false;
                 }
                 break;
-            case 'w': // -X
+            case WEST: // -X
                 if (x-1 < 0) {
                     result = false;
                 }
@@ -75,7 +75,7 @@ public class MoveFleet extends Ability {
         return result;
     }
 
-    public void moveFleet(char direction, Board board) {
+    public void moveFleet(Direction direction, Board board) {
         boolean canMoveFleet = true;
         for (int y = 0; y < board.getY(); y++) {
             for (int x = 0; x < board.getX(); x++) {
@@ -87,11 +87,11 @@ public class MoveFleet extends Ability {
             }
         }
         if (canMoveFleet) { //can only move fleet if all ships/ship cells can move in a direction
-            HashMap<Character, Tuple<Integer, Integer>> dirMap = new HashMap<>(); // Map between direction <-> delta X/Y
-            dirMap.put('n', new Tuple<>(0, -1));
-            dirMap.put('e', new Tuple<>(1, 0));
-            dirMap.put('s', new Tuple<>(0, 1));
-            dirMap.put('w', new Tuple<>(-1, 0));
+            HashMap<Direction, Tuple<Integer, Integer>> dirMap = new HashMap<>(); // Map between direction <-> delta X/Y
+            dirMap.put(Direction.NORTH, new Tuple<>(0, -1));
+            dirMap.put(Direction.EAST, new Tuple<>(1, 0));
+            dirMap.put(Direction.SOUTH, new Tuple<>(0, 1));
+            dirMap.put(Direction.WEST, new Tuple<>(-1, 0));
 
             int dy = dirMap.get(direction).y;
             int dx = dirMap.get(direction).x;

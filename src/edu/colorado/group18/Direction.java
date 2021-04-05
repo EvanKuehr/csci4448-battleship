@@ -5,7 +5,8 @@ public enum Direction {
     NORTH,
     EAST,
     SOUTH,
-    WEST;
+    WEST,
+    INVALID;
 
     public Direction opposite() {
         switch(this) {
@@ -13,8 +14,7 @@ public enum Direction {
             case SOUTH: return Direction.NORTH;
             case EAST: return Direction.WEST;
             case WEST: return Direction.EAST;
-            default: throw new IllegalStateException("Invalid direction, can't find opposite");
+            default: return Direction.INVALID;
         }
     }
-
 }

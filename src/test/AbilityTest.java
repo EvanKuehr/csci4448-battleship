@@ -85,6 +85,11 @@ public class AbilityTest {
     }
 
     @Test
+    public void invalidOppositeDirection() {
+        assertEquals(Direction.INVALID, Direction.INVALID.opposite());
+    }
+
+    @Test
     public void testMoveFleetNorth() {
         moveFleetInit();
         MoveFleet mf = new MoveFleet(player);
@@ -145,7 +150,7 @@ public class AbilityTest {
     }
 
     @Test
-    public void testSurfaceBoardMiss() {
+    public void testTorpedoSurfaceBoardMiss() {
         int row = 8;
         Torpedo torpedo = new Torpedo();
         Board board = torpedo.use(this.player, row, true);
@@ -155,7 +160,7 @@ public class AbilityTest {
     }
 
     @Test
-    public void testSubBoardMiss() {
+    public void testTorpedoSubBoardMiss() {
         int row = 8;
         Torpedo torpedo = new Torpedo();
         Board board = torpedo.use(this.player, row, false);
@@ -165,7 +170,7 @@ public class AbilityTest {
     }
 
     @Test
-    public void testSurfaceBoardHit() {
+    public void testTorpedoSurfaceBoardHit() {
         int row = 1;
         Torpedo torpedo = new Torpedo();
         Board board = torpedo.use(this.player, row, true);
@@ -175,12 +180,38 @@ public class AbilityTest {
     }
 
     @Test
-    public void testSubBoardHit() {
+    public void testTorpedoSubBoardHit() {
         int row = 2;
         Torpedo torpedo = new Torpedo();
         Board board = torpedo.use(this.player, row, false);
         Cell cell = board.getCell(row, 2);
         assertTrue("cell wasn't hit", cell.getHitStatus());
         assertTrue("there should be a ship there", cell instanceof ShipCell);
+    }
+
+    @Test
+    public void testRepairSuccess() {
+        Repair repair = new Repair();
+        player.receiveStrike(1,1);
+        assertTrue(this.player.getFleet()[0].getCells()[0]); //Check that the ship cell is hit
+        assertTrue(repair.use(player,1,1)); //repair should be successful
+        assertFalse(this.player.getFleet()[0].getCells()[0]); //Check that the ship cell is no longer hit
+    }
+
+    @Test
+    public void testRepairFail1() {
+        Repair repair = new Repair();
+        assertFalse(repair.use(player,5,5)); //can't repair a non-ship cell
+    }
+
+    @Test
+    public void testRepairFail2() {
+        Repair repair = new Repair();
+        player.receiveStrike(1,3); //damage captain's quarters
+        for(int j = 1; j < 6; j++) { //sink ship
+            player.receiveStrike(1,j);
+        }
+        assertTrue(this.player.getFleet()[0].getSunk()); //check that the ship is sunk
+        assertFalse(repair.use(player,1,1)); //can't repair a sunken ship
     }
 }

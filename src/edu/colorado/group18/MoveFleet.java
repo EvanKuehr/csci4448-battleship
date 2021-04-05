@@ -6,15 +6,15 @@ import java.util.Stack;
 public class MoveFleet extends Ability {
     private Stack <Command> undoStack;
     private Stack <Command> redoStack;
-    private DualBoardPlayer player;
+    private AbilityPlayer player;
 
-    public MoveFleet(DualBoardPlayer p) {
+    public MoveFleet(AbilityPlayer p) {
         undoStack = new Stack <Command>();
         redoStack = new Stack <Command>();
         player = p;
     }
 
-    public DualBoardPlayer getPlayer() { return player; }
+    public AbilityPlayer getPlayer() { return player; }
 
     public Board[] use(Command moveCommand) {
         moveCommand.execute();

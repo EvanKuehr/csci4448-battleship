@@ -1,7 +1,7 @@
 package edu.colorado.group18;
 
 public class Torpedo extends Ability {
-    public Board use(DualBoardPlayer opponent, int row, boolean surface) {
+    public Board use(AbilityPlayer opponent, int row, boolean surface) {
         Board board;
         if (surface) {
             board = opponent.getBoard();

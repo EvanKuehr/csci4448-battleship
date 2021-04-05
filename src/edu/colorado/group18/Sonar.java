@@ -1,7 +1,7 @@
 package edu.colorado.group18;
 
 public class Sonar extends Ability {
-    public Board use(Player self, Player opponent, int x, int y) {
+    public Board use(AbilityPlayer self, Player opponent, int x, int y) {
         Board oppBoard = opponent.getBoard();
         if (opponent.hasSunkenShip()) {
             if (self.decrementSonars()) { ;

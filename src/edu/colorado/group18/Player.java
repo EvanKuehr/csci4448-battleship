@@ -3,32 +3,16 @@ package edu.colorado.group18;
 import java.util.Arrays;
 
 public class Player {
-    private double balance;
-    private Card[] deck;
     private Ship[] fleet;
     private Board board;
-    private int numSonars;
 
     public Player(Ship[] fleet) {
-        this.balance = 0.0;
-        this.deck = new Card[5];
+
         this.fleet = fleet;
         this.board = new Board(10, 10);
-        this.numSonars = 2;
     }
 
     // GET METHODS
-//    public double getBalance() {
-//        return balance;
-//    }
-
-//    public String[] getDeck() {
-//        String[] abilities = new String[5];
-//        for (int i = 0; i < deck.length; i++) {
-//            abilities[i] = deck[i].ability;
-//        }
-//        return abilities;
-//    }
 
     public Ship[] getFleet() {
         return fleet;
@@ -36,16 +20,6 @@ public class Player {
 
     public Board getBoard() {
         return board;
-    }
-
-    public boolean decrementSonars() {
-        if (numSonars > 0) {
-            numSonars -= 1;
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
     public boolean placeShip(Ship ship, int y, int x, char orient) {
@@ -70,33 +44,9 @@ public class Player {
         return success;
     }
 
-//    public void buyCard(Card card) {
-//        if (balance >= card.cost) {
-//            balance -= card.cost;
-//            Card[] newDeck = new Card[deck.length + 1];
-//            int i = 0;
-//            for (i = 0; i < deck.length; i++) {
-//                newDeck[i] = deck[i];
-//            }
-//            newDeck[i] = card;
-//            deck = newDeck;
-//        }
-//    }
-
-//    public Card useCard(int index) {
-//        return deck[index];
-//    }
-
     public boolean[] strike(Player opponent, int y, int x) {
         return opponent.receiveStrike(y, x);
     }
-
-//    public boolean[] strike(Player opponent, int y, int x, Card card) {
-//        // TODO: attack using special ability
-//        System.out.println(card.ability);
-//        boolean[] retArray = {false,false};
-//        return retArray;
-//    }
 
     //returns a list of two booleans:
     //index 0: if a ship was hit
@@ -105,7 +55,6 @@ public class Player {
         return board.strike(y, x);
     }
 
-    // TODO: implement receiveStrike() for strike() special overload function
 
     public boolean shouldSurrender() {
         boolean retVal = true;

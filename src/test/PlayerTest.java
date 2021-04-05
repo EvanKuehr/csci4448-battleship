@@ -1,8 +1,5 @@
 package test;
-import edu.colorado.group18.DualBoardPlayer;
-import edu.colorado.group18.Submarine;
-import edu.colorado.group18.Player;
-import edu.colorado.group18.Ship;
+import edu.colorado.group18.*;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -126,21 +123,18 @@ public class PlayerTest {
         assertTrue(p2.placeShip(fleet[3], 5, 5, 'h', false));
     }
 
-    //helper function
-    public Player createSonarEnemy() {
-        Ship[] fleet = {new Ship("ship3",2,-1), new Ship("ship4", 3,-1), new Ship("ship5", 3,-1)};
-        Player p = new Player(fleet);
-        p.placeShip(p.getFleet()[0], 3, 2, 'h');
-        p.placeShip(p.getFleet()[1], 5, 4, 'v');
-        p.placeShip(p.getFleet()[2], 0, 0, 'v');
-        return p;
-    }
+    @Test
+    public void abilityPlayerUseCard() {
+        AbilityPlayer aPlayer = new AbilityPlayer(p1.getFleet(),1);
+        Card missile = new Card("Strike", 1,new Missile());
+        Card torpedo = new Card("Torpedo",2, new Torpedo());
 
-    //helper function
-    public void strikeBeforeSonar(Player opponent) {
-        p1.strike(opponent, 0, 0);
-        p1.strike(opponent, 1, 0);
-        p1.strike(opponent, 2, 0);
+        assertFalse(aPlayer.buyCard(missile)); //can't buy a card without money
+        aPlayer.incrementBalance(3);
+        assertTrue(aPlayer.buyCard(missile)); //buy a card
+        assertFalse(aPlayer.buyCard(torpedo)); //can't buy a card, inventory full
+        assertTrue(aPlayer.useCard("Strike")); //Can use the card, in their inventory
+        assertFalse(aPlayer.useCard("Strike")); //Can't use it, no longer in their inventory
     }
 }
 

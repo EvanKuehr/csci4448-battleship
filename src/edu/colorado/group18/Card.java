@@ -1,7 +1,16 @@
 package edu.colorado.group18;
 
-//This class will be fully implemented in a future milestone
 public class Card {
-    public double cost;
-    public String ability;
+    private String name;
+    private int cost;
+    public Ability ability;
+
+    public Card(String n, int c, Ability a) {
+        name = n;
+        cost = c;
+        ability = a;
+    }
+
+    public int getCost() { return cost; }
+    public String getName() { return name; }
 }

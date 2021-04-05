@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 
 public class AbilityTest {
-    private DualBoardPlayer player;
+    private AbilityPlayer player;
 
     @Before
     public void setUp() {
@@ -16,7 +16,7 @@ public class AbilityTest {
                 new Battleship(),
                 new Submarine()
         };
-        this.player = new DualBoardPlayer(fleet);
+        this.player = new AbilityPlayer(fleet);
         this.player.placeShip(this.player.getFleet()[0], 1, 1, 'h', false);
         this.player.placeShip(this.player.getFleet()[1], 1, 2, 'v', true);
     }
@@ -62,7 +62,7 @@ public class AbilityTest {
     public void testSonar() {
 
         Ship[] fleet = { new Minesweeper() };
-        Player opponent = new DualBoardPlayer(fleet);
+        Player opponent = new AbilityPlayer(fleet);
         opponent.placeShip(fleet[0], 0, 0, 'h');
         opponent.receiveStrike(0,0);
         opponent.receiveStrike(0,1);
@@ -79,7 +79,7 @@ public class AbilityTest {
 
     private void moveFleetInit() {
         Ship[] fleet = {new Destroyer(), new Destroyer()};
-        player = new DualBoardPlayer(fleet);
+        player = new AbilityPlayer(fleet);
         player.getBoard().placeShip(fleet[0], 1, 1, 'v');
         player.getBoard().placeShip(fleet[1], 6, 8, 'v');
     }

@@ -57,10 +57,7 @@ public class Ship implements PropertyChangeListener {
     public boolean hit(int index) {
         IndexedPropertyChangeEvent indexedEvt = new IndexedPropertyChangeEvent(new ShipCell(this,index),"hit", false, true, index);
         propertyChange(indexedEvt);
-        if (this.isSunk()) {
-            return true;
-        }
-        return false;
+        return this.isSunk();
     }
 
     //runs when a corresponding ship cell is hit and updates the ship accordingly

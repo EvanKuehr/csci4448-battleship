@@ -14,22 +14,7 @@ import java.util.UUID;
 @RestController
 public class BattleshipApplication {
 
-	private class Player {
-		// Player stub class
-	}
-
-	private class Game {
-		// Game stub class
-		public Player P1 = new Player();
-		public Player P2 = new Player();
-		public Game(Player P1) {
-			this.P1 = P1;
-		}
-	}
-
-
 	HashMap<String, Game> games = new HashMap<String, Game>();
-	HashMap<String, Player> players = new HashMap<String, Player>();
 
 	public static void main(String[] args) {
 		SpringApplication.run(BattleshipApplication.class, args);
@@ -37,17 +22,14 @@ public class BattleshipApplication {
 
 	@PostMapping("/create")
 	public String create() {
-		Player p1 = new Player();
-		Game newGame = new Game(p1);
+		Game newGame = new Game();
 
-		String user = UUID.randomUUID().toString().replace("-", "");
 		String room = UUID.randomUUID().toString().replace("-", "");
 
 		this.games.put(room, newGame);
-		this.players.put(user, p1);
 
-		System.out.printf("game created: %s\nby user: %s\n\n", room, user);
-		return String.format("{\"user\": \"%s\", \"room\": \"%s\"}", user, room);
+		System.out.printf("game created: %s\n\n", room);
+		return String.format("{\"player\": \"%s\", \"room\": \"%s\"}", "p1", room);
 	}
 
 	@PostMapping("/join")
@@ -61,24 +43,33 @@ public class BattleshipApplication {
 			return "Room Not Found";
 		}
 
-		Player p2 = new Player();
-		game.P2 = p2;
-
-		String user = UUID.randomUUID().toString().replace("-", "");;
-		this.players.put(user, p2);
-
-		System.out.printf("game joined: %s\nby user: %s\n\n", room, user);
-		return String.format("{\"user\": \"%s\", \"room\": \"%s\"}", user, room);
+		System.out.printf("game joined: %s\n\n", room);
+		return String.format("{\"player\": \"%s\", \"room\": \"%s\"}", "p2", room);
 	}
 
 	@PostMapping("/set-fleet")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+	public String setFleet(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return String.format("Hello %s!", name);
 	}
 
 	@GetMapping("/")
-	public String setFleet(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
+	public String update(@RequestParam(value = "room") String room, @RequestParam(value = "player") String user) {
+		Game game = this.games.get(room);
+		if (game == null) {
+			return "Room Not Found";
+		}
+
+		DualBoardPlayer player;
+
+		if (user == "p1") {
+			player = game.P1; 
+		} else if (user == "p2") {
+			player = game.P2; 
+		} else {
+			return String.format("Player must be `p1` or `p2` but you passed `%s`!", user);
+		}
+
+		return String.format("{\"your_turn\": %b, \"data\": %s}", game.isTurn(user), player.toJson());
 	}
 
 	@GetMapping("/player")

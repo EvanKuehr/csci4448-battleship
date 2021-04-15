@@ -59,7 +59,7 @@ public class BattleshipApplication {
 			return "Room Not Found";
 		}
 
-		DualBoardPlayer player;
+		AbilityPlayer player;
 
 		if (user == "p1") {
 			player = game.P1; 
@@ -73,7 +73,7 @@ public class BattleshipApplication {
 	}
 
 	@GetMapping("/player")
-	public Player getPlayer(@RequestParam(value = "room", defaultValue = "") String room, @RequestParam(value = "player", defaultValue = "1") int player) {
+	public String getPlayer(@RequestParam(value = "room", defaultValue = "") String room, @RequestParam(value = "player", defaultValue = "1") int player) {
 
 		Game game = this.games.get(room);
 		if (game == null) {
@@ -81,9 +81,10 @@ public class BattleshipApplication {
 		}
 
 		if (player == 1) {
-			return game.P1;
+			//game.P1.placeShip(game.P1.getFleet()[2], 0, 0, 'h'); //this line can be used to test with ShipCells
+			return game.P1.toJson();
 		} else if (player == 2) {
-			return game.P2;
+			return game.P2.toJson();
 		} else {
 			return null;
 		}

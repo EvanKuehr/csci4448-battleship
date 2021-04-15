@@ -5,24 +5,20 @@ public class DualBoardPlayer extends Player {
 	private Board subBoard;
 	private Board board;
 
+	public DualBoardPlayer() {
+		super();
+		this.subBoard = new Board(10,10);
+		this.board = new Board(10,10);
+	}
+
 	public DualBoardPlayer(Ship[] fleet) {
 		super(fleet);
 		this.subBoard = new Board(10,10);
 		this.board = new Board(10,10);
 	}
 
-	public static DualBoardPlayer getDefaultPlayer() {
-		Ship[] fleet = {new Ship("ship1",2,-1), new Ship("ship2", 3,-1)};
-		return new DualBoardPlayer(fleet);
-	}
-
 	public Board getSubBoard() {
 		return subBoard;
-	}
-
-	public String toJson() {
-		// TODO: implement in a meaningful way
-		return String.format("{\"key1\": \"%s\", \"key2\": \"%s\"}", "value1", "value2");
 	}
 
 	public boolean placeShip(Ship ship, int y, int x, char orient, boolean submerged) {

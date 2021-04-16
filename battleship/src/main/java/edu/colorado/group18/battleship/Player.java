@@ -5,7 +5,7 @@ public class Player {
     private Board board;
 
     public Player() {
-        this.fleet = new Ship[]{new Ship("ship1", 2, -1), new Ship("ship2", 3, -1), new Ship("ship3", 4, -1)};
+        this.fleet = new Ship[]{new Ship("ship0", 2, -1), new Ship("ship1", 3, -1), new Ship("ship2", 4, -1)};
         this.board = new Board(10, 10);
     }
 

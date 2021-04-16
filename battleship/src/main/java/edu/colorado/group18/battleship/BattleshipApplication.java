@@ -1,11 +1,11 @@
 package edu.colorado.group18.battleship;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -20,7 +20,24 @@ public class BattleshipApplication {
 		SpringApplication.run(BattleshipApplication.class, args);
 	}
 
-	@PostMapping("/create")
+	public Game verifyGame(String room) {
+		return this.games.get(room);
+	}
+
+	public AbilityPlayer verifyPlayer(String room, int userID) {
+		Game game = verifyGame(room);
+		AbilityPlayer player = null;
+
+		if (userID == 1) {
+			player = game.P1;
+		} else if (userID == 2) {
+			player = game.P2;
+		}
+
+		return player;
+	}
+
+	@GetMapping("/create")
 	public String create() {
 		Game newGame = new Game();
 
@@ -29,64 +46,83 @@ public class BattleshipApplication {
 		this.games.put(room, newGame);
 
 		System.out.printf("game created: %s\n\n", room);
-		return String.format("{\"player\": \"%s\", \"room\": \"%s\"}", "p1", room);
+		return String.format("{\"player\": %s, \"room\": \"%s\"}", 1, room);
 	}
 
-	@PostMapping("/join")
+	@GetMapping("/join")
 	public String join(@RequestParam(value = "room", defaultValue = "") String room) {
 		if (room.length() == 0) {
 			return "Room ID Required";
 		}
 
-		Game game = this.games.get(room);
+		Game game = verifyGame(room);
 		if (game == null) {
 			return "Room Not Found";
 		}
 
 		System.out.printf("game joined: %s\n\n", room);
-		return String.format("{\"player\": \"%s\", \"room\": \"%s\"}", "p2", room);
+		return String.format("{\"player\": %s, \"room\": \"%s\"}", 2, room);
 	}
 
-	@PostMapping("/set-fleet")
-	public String setFleet(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
+	private static class PlaceShipParams {
+		int ship;
+		int y;
+		int x;
+		char orient;
+		boolean submerged;
+
+		@JsonCreator
+		public PlaceShipParams(@JsonProperty("ship") int ship, @JsonProperty("y") int y, @JsonProperty("x") int x, @JsonProperty("orient") char orient, @JsonProperty("submerged") boolean submerged) {
+			this.ship = ship;
+			this.y = y;
+			this.x = x;
+			this.orient = orient;
+			this.submerged = submerged;
+		}
 	}
+
+	private static class SetFleetParams {
+		String room;
+		int player;
+		PlaceShipParams[] fleet;
+		@JsonCreator
+		public SetFleetParams(@JsonProperty("room") String room, @JsonProperty("player") int player, @JsonProperty("fleet") PlaceShipParams[] fleet) {
+			this.room = room;
+			this.player = player;
+			this.fleet = fleet;
+		}
+	}
+
+	@PostMapping("/set-fleet") //@RequestBody(value = "room") String room, @RequestBody(value = "player") int userID, @RequestBody(value = "placedFleet") String json
+	public String setFleet(@RequestBody String bodyJson) {
+			try {
+				// convert JSON string to list of PlaceShipParams
+				//PlaceShipParams[] paramsList = new ObjectMapper().readValue(json, new TypeReference<PlaceShipParams[]>(){});
+				SetFleetParams body = new ObjectMapper().readValue(bodyJson, SetFleetParams.class);
+				AbilityPlayer player = verifyPlayer(body.room, body.player);
+				if (player != null) {
+					for (PlaceShipParams p : body.fleet) {
+						player.placeShip(player.getFleet()[p.ship], p.y, p.x, p.orient, p.submerged);
+					}
+					return "Fleet added to board";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "Error setting fleet";
+			}
+			return "Error setting fleet";
+		}
 
 	@GetMapping("/")
-	public String update(@RequestParam(value = "room") String room, @RequestParam(value = "player") String user) {
-		Game game = this.games.get(room);
-		if (game == null) {
-			return "Room Not Found";
-		}
-
-		AbilityPlayer player;
-
-		if (user == "p1") {
-			player = game.P1; 
-		} else if (user == "p2") {
-			player = game.P2; 
-		} else {
-			return String.format("Player must be `p1` or `p2` but you passed `%s`!", user);
-		}
-
-		return String.format("{\"your_turn\": %b, \"data\": %s}", game.isTurn(user), player.toJson());
+	public String update(@RequestParam(value = "room") String room, @RequestParam(value = "player") int userID) {
+		AbilityPlayer player = verifyPlayer(room, userID);
+		return String.format("{\"your_turn\": %b, \"data\": %s}", verifyGame(room).isTurn(userID), player.toJson());
 	}
 
 	@GetMapping("/player")
-	public String getPlayer(@RequestParam(value = "room", defaultValue = "") String room, @RequestParam(value = "player", defaultValue = "1") int player) {
-
-		Game game = this.games.get(room);
-		if (game == null) {
-			return null;
-		}
-
-		if (player == 1) {
-			//game.P1.placeShip(game.P1.getFleet()[2], 0, 0, 'h'); //this line can be used to test with ShipCells
-			return game.P1.toJson();
-		} else if (player == 2) {
-			return game.P2.toJson();
-		} else {
-			return null;
-		}
+	public String getPlayer(@RequestParam(value = "room", defaultValue = "") String room, @RequestParam(value = "player") int userID) {
+		AbilityPlayer player = verifyPlayer(room, userID);
+		//player.placeShip(player.getFleet()[2], 0, 0, 'h'); //this line can be used to test with ShipCells
+		return player.toJson();
 	}
 }

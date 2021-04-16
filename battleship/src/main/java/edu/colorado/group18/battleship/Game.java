@@ -18,11 +18,11 @@ public class Game {
         this.turn = 1;
     }
 
-    public boolean isTurn(String p) {
-        if (p == "p1") {
-            return turn % 2 != 0;
+    public boolean isTurn(int p) {
+        if (p == 1) {
+            return this.turn % 2 != 0;
         }
-        return turn % 2 == 0;
+        return this.turn % 2 == 0;
     }
 
     public void takeTurn(/* params? */) {

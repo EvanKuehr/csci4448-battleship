@@ -5,6 +5,7 @@ public class Repair extends Ability {
         Cell targetCell = self.getBoard().getCell(y,x);
         if(targetCell instanceof ShipCell) {
             ShipCell shipCell = (ShipCell) targetCell;
+            shipCell.setHitStatus(false);
             return shipCell.getShipRef().repair(shipCell.getShipArrayIndex()); //return whether or not the repair was successful
         }
         else { //Can't repair a cell that isn't a part of a ship

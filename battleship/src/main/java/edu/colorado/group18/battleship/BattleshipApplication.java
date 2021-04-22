@@ -175,4 +175,22 @@ public class BattleshipApplication {
 		return "Error attacking with missile";
 	}
 
+	@PostMapping("/repair")
+	public String repair(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to LocationParams object
+			LocationParams body = new ObjectMapper().readValue(bodyJson, LocationParams.class);
+			AbilityPlayer player = verifyPlayer(body.room, body.player);
+
+			if (player != null) {
+				Repair r = new Repair();
+				return "Repair was successful? : " + r.use(player, body.y, body.x);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error with repairing";
+		}
+		return "Error with repairing";
+	}
+
 }

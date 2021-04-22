@@ -242,4 +242,37 @@ public class BattleshipApplication {
 		return "Error with sonar";
 	}
 
+	private static class MoveParams {
+		String room;
+		int player;
+		Direction dir;
+
+		@JsonCreator
+		public MoveParams(@JsonProperty("room") String room, @JsonProperty("player") int player, @JsonProperty("direction") Direction dir) {
+			this.room = room;
+			this.player = player;
+			this.dir = dir;
+		}
+	}
+
+	@PostMapping("/move")
+	public String move(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to MoveParams object
+			MoveParams body = new ObjectMapper().readValue(bodyJson, MoveParams.class);
+			AbilityPlayer player = verifyPlayer(body.room, body.player);
+
+			if (player != null) {
+				player.removeCard("move");
+				MoveFleet m = new MoveFleet(player);
+				m.use(new MoveCommand(m, body.dir));
+				return "Move was successful";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error with moving fleet";
+		}
+		return "Error with moving fleet";
+	}
+
 }

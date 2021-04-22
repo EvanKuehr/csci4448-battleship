@@ -106,7 +106,23 @@ public class MoveFleet extends Ability {
                 for (int x = 0; x < board.getX(); x++) {
                     if (cellsCopy[y][x] instanceof ShipCell) {
                         board.cells[y+dy][x+dx] = cellsCopy[y][x];
+                        //board.cells[y][x] = new Cell(); //this line is causing the test cases to fail
                     }
+//                    else if (y==0 && direction == Direction.SOUTH) {
+//                        board.cells[y][x] = new Cell();
+//                    }
+//                    else if (x==0 && direction == Direction.EAST) {
+//                        board.cells[y][x] = new Cell();
+//                    }
+//                    else if (y==board.getY()-1 && direction == Direction.NORTH) {
+//                        board.cells[y][x] = new Cell();
+//                    }
+//                    else if (x==board.getX()-1 && direction == Direction.WEST) {
+//                        board.cells[y][x] = new Cell();
+//                    }
+//                    else if (canMove(y,x,direction,board)) {
+//                        board.cells[y+dy][x+dx] = cellsCopy[y][x];
+//                    }
                 }
             }
         }

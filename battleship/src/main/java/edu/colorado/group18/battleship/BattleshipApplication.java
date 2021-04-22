@@ -137,8 +137,8 @@ public class BattleshipApplication {
 	public String update(@RequestParam(value = "room") String room, @RequestParam(value = "player") int userID) {
 		AbilityPlayer player = verifyPlayer(room, userID);
 		AbilityPlayer opponent = verifyPlayer(room, getOpponentID(userID));
-
-		return String.format("{\"yourTurn\": %b, \"your_data\": %s, \"opponent_data\": %s}", verifyGame(room).isTurn(userID), player.toJson(), opponent.toJson());
+		//winStatus: -1 if game is in progress, 0 if you lost, 1 if you won
+		return String.format("{\"winStatus\": %d, \"yourTurn\": %b, \"your_data\": %s, \"opponent_data\": %s}", verifyGame(room).getWinStatus(userID), verifyGame(room).isTurn(userID), player.toJson(), opponent.toJson());
 	}
 
 	private static class LocationParams {
@@ -175,6 +175,26 @@ public class BattleshipApplication {
 		return "Error attacking with missile";
 	}
 
+	@PostMapping("/lazer")
+	public String lazer(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to LocationParams object
+			LocationParams body = new ObjectMapper().readValue(bodyJson, LocationParams.class);
+			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
+
+			if (opponent != null) {
+				verifyPlayer(body.room, body.player).removeCard("lazer");
+				SpaceLazer l = new SpaceLazer();
+				l.use(opponent, body.y, body.x);
+				return "Attacked opponent with lazer";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error attacking with lazer";
+		}
+		return "Error attacking with lazer";
+	}
+
 	@PostMapping("/repair")
 	public String repair(@RequestBody String bodyJson) {
 		try {
@@ -183,6 +203,7 @@ public class BattleshipApplication {
 			AbilityPlayer player = verifyPlayer(body.room, body.player);
 
 			if (player != null) {
+				player.removeCard("repair");
 				Repair r = new Repair();
 				return "Repair was successful? : " + r.use(player, body.y, body.x);
 			}

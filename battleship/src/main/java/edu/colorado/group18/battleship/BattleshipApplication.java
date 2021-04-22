@@ -47,6 +47,17 @@ public class BattleshipApplication {
 		return player;
 	}
 
+	public int getOpponentID(int userID) {
+		int oppID = -1;
+		if (userID == 1) {
+			oppID = 2;
+		}
+		else {
+			oppID = 1;
+		}
+		return oppID;
+	}
+
 	@GetMapping("/create")
 	public String create() {
 		Game newGame = new Game();
@@ -125,15 +136,43 @@ public class BattleshipApplication {
 	@GetMapping("/update")
 	public String update(@RequestParam(value = "room") String room, @RequestParam(value = "player") int userID) {
 		AbilityPlayer player = verifyPlayer(room, userID);
-		int oppID = -1;
-		if (userID == 1) {
-			oppID = 2;
-		}
-		else {
-			oppID = 1;
-		}
-		AbilityPlayer opponent = verifyPlayer(room, oppID);
+		AbilityPlayer opponent = verifyPlayer(room, getOpponentID(userID));
 
 		return String.format("{\"yourTurn\": %b, \"your_data\": %s, \"opponent_data\": %s}", verifyGame(room).isTurn(userID), player.toJson(), opponent.toJson());
 	}
+
+	private static class LocationParams {
+		String room;
+		int player;
+		int x;
+		int y;
+
+		@JsonCreator
+		public LocationParams(@JsonProperty("room") String room, @JsonProperty("player") int player, @JsonProperty("y") int y, @JsonProperty("x") int x) {
+			this.room = room;
+			this.player = player;
+			this.y = y;
+			this.x = x;
+		}
+	}
+
+	@PostMapping("/missile")
+	public String missile(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to LocationParams object
+			LocationParams body = new ObjectMapper().readValue(bodyJson, LocationParams.class);
+			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
+
+			if (opponent != null) {
+				Missile m = new Missile();
+				m.use(opponent, body.x, body.y); //missile takes params in x,y order
+				return "Attacked opponent with missile";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error attacking with missile";
+		}
+		return "Error attacking with missile";
+	}
+
 }

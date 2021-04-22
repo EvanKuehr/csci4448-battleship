@@ -8,6 +8,6 @@ public class Card {
         name = n;
         ability = a;
     }
-    
+
     public String getName() { return name; }
 }

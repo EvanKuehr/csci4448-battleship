@@ -21,17 +21,27 @@ public class BattleshipApplication {
 	}
 
 	public Game verifyGame(String room) {
-		return this.games.get(room);
+		Game retVal = this.games.get(room);
+		if(retVal == null) {
+			System.out.println("Error finding room " + room);
+		}
+		return retVal;
 	}
 
 	public AbilityPlayer verifyPlayer(String room, int userID) {
 		Game game = verifyGame(room);
 		AbilityPlayer player = null;
 
-		if (userID == 1) {
-			player = game.P1;
-		} else if (userID == 2) {
-			player = game.P2;
+		if (game != null) {
+			if (userID == 1) {
+				player = game.P1;
+			} else if (userID == 2) {
+				player = game.P2;
+			}
+		}
+
+		if (player == null) {
+			System.out.println("Error finding player " + userID);
 		}
 
 		return player;
@@ -93,11 +103,10 @@ public class BattleshipApplication {
 		}
 	}
 
-	@PostMapping("/set-fleet") //@RequestBody(value = "room") String room, @RequestBody(value = "player") int userID, @RequestBody(value = "placedFleet") String json
+	@PostMapping("/set-fleet")
 	public String setFleet(@RequestBody String bodyJson) {
 			try {
 				// convert JSON string to list of PlaceShipParams
-				//PlaceShipParams[] paramsList = new ObjectMapper().readValue(json, new TypeReference<PlaceShipParams[]>(){});
 				SetFleetParams body = new ObjectMapper().readValue(bodyJson, SetFleetParams.class);
 				AbilityPlayer player = verifyPlayer(body.room, body.player);
 				if (player != null) {
@@ -113,16 +122,18 @@ public class BattleshipApplication {
 			return "Error setting fleet";
 		}
 
-	@GetMapping("/")
+	@GetMapping("/update")
 	public String update(@RequestParam(value = "room") String room, @RequestParam(value = "player") int userID) {
 		AbilityPlayer player = verifyPlayer(room, userID);
-		return String.format("{\"your_turn\": %b, \"data\": %s}", verifyGame(room).isTurn(userID), player.toJson());
-	}
+		int oppID = -1;
+		if (userID == 1) {
+			oppID = 2;
+		}
+		else {
+			oppID = 1;
+		}
+		AbilityPlayer opponent = verifyPlayer(room, oppID);
 
-	@GetMapping("/player")
-	public String getPlayer(@RequestParam(value = "room", defaultValue = "") String room, @RequestParam(value = "player") int userID) {
-		AbilityPlayer player = verifyPlayer(room, userID);
-		//player.placeShip(player.getFleet()[2], 0, 0, 'h'); //this line can be used to test with ShipCells
-		return player.toJson();
+		return String.format("{\"yourTurn\": %b, \"your_data\": %s, \"opponent_data\": %s}", verifyGame(room).isTurn(userID), player.toJson(), opponent.toJson());
 	}
 }

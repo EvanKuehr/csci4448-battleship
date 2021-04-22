@@ -8,13 +8,13 @@ public class Game {
 
     public Game() {
         this.P1 = new AbilityPlayer();
-        this.P1 = new AbilityPlayer();
+        this.P2 = new AbilityPlayer();
         this.turn = 1;
     }
     
     public Game(AbilityPlayer P1, AbilityPlayer P2) {
         this.P1 = P1;
-        this.P1 = P2;
+        this.P2 = P2;
         this.turn = 1;
     }
 

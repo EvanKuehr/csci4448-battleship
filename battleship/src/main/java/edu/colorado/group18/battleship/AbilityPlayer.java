@@ -12,21 +12,21 @@ public class AbilityPlayer extends DualBoardPlayer {
     public AbilityPlayer() {
         super();
         this.deck = new Vector<Card>();
-        this.numSonars = 2;
+        this.numSonars = 100;
         this.maxCards = 3;
     }
 
     public AbilityPlayer(Ship fleet[], int maxCardNum) {
         super(fleet);
         this.deck = new Vector<Card>();
-        this.numSonars = 2;
+        this.numSonars = 100;
         this.maxCards = maxCardNum;
     }
 
     public AbilityPlayer(Ship fleet[]) {
         super(fleet);
         this.deck = new Vector<Card>();
-        this.numSonars = 2;
+        this.numSonars = 100;
         this.maxCards = 3;
     }
 

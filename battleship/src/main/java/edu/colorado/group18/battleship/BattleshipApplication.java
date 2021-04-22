@@ -214,4 +214,32 @@ public class BattleshipApplication {
 		return "Error with repairing";
 	}
 
+	@PostMapping("/sonar")
+	public String sonar(@RequestBody String bodyJson) { //needs to return a JSON representation of a sonar board
+		try {
+			// convert JSON string to LocationParams object
+			LocationParams body = new ObjectMapper().readValue(bodyJson, LocationParams.class);
+			AbilityPlayer player = verifyPlayer(body.room, body.player);
+			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
+
+			if (player != null && opponent != null) {
+				player.removeCard("sonar");
+				Sonar s = new Sonar();
+				Board resultBoard = s.use(player, opponent, body.x, body.y);
+				String retJson = "";
+				try {
+					retJson = new ObjectMapper().writeValueAsString(resultBoard);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return "Error with sonar";
+				}
+				return retJson;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error with sonar";
+		}
+		return "Error with sonar";
+	}
+
 }

@@ -1,0 +1,59 @@
+// This is the project stylesheet
+
+// Colors
+$black: rgba(0, 0, 0, 1);
+$dim-gray: rgba(94, 94, 94, 1);
+$dim-gray-2: rgba(106, 106, 106, 1);
+$silver: rgba(201, 198, 194, 1);
+$transparent-silver: rgba(196, 196, 196, 0.6);
+
+// Typographies
+@mixin quantico-72-regular {
+  font-family: "Quantico";
+  font-size: 72px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.loserModal {
+  border-radius: 50px;
+  padding: 88px 95px 40.28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(
+                  180deg,
+                  $silver 0%,
+                  $dim-gray-2 100%
+  );
+  border: 5px solid $dim-gray;
+}
+.youLose {
+  height: 120px;
+  width: 573px;
+  color: $black;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  @include quantico-72-regular;
+}
+.victoryDefeat2 {
+  margin-bottom: 18px;
+}
+.group5 {
+  background-color: $transparent-silver;
+  border-radius: 75px;
+  padding: 52px 87px;
+  display: flex;
+  align-items: center;
+  border: 1px solid $dim-gray;
+}
+.continue {
+  height: 44px;
+  width: 356px;
+  color: $black;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  @include quantico-72-regular;
+}

@@ -3,7 +3,7 @@ package edu.colorado.group18.battleship;
 public class Sonar extends Ability {
     public Board use(AbilityPlayer self, Player opponent, int x, int y) {
         Board oppBoard = opponent.getBoard();
-        if (opponent.hasSunkenShip()) {
+        //if (opponent.hasSunkenShip()) { //removed this check for the actual game
             if (self.decrementSonars()) { ;
                 for (int j = y-2; j <= y+2; j++) {
                     for (int i = x-2; i <= x+2; i++) {
@@ -20,7 +20,7 @@ public class Sonar extends Ability {
                     }
                 }
             }
-        }
+        //}
         return oppBoard;
     }
 }

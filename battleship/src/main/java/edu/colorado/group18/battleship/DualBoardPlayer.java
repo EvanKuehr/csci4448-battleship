@@ -50,7 +50,26 @@ public class DualBoardPlayer extends Player {
 				}
 			}
 			else {
-				success = super.placeShip(ship, y, x, orient);
+				if (!submerged) {
+					success = super.placeShip(ship, y, x, orient);
+				}
+				else {
+					if (orient == 'v') {
+						if (x < subBoard.getX() && y < subBoard.getY() - ship.getLength()) {
+							if (subBoard.placeShip(ship, y, x, orient)) {
+								ship.placed = true;
+								success = true;
+							}
+						}
+					} else if (orient == 'h') {
+						if (x < subBoard.getX() - ship.getLength() && y < subBoard.getY()) {
+							if(subBoard.placeShip(ship, y, x, orient)) {
+								ship.placed = true;
+								success = true;
+							}
+						}
+					}
+				}
 			}
 		}
 		return success;

@@ -1,16 +1,15 @@
 package edu.colorado.group18.battleship;
 
-public class Card {
-    private String name;
-    private int cost;
-    public Ability ability;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public Card(String n, int c, Ability a) {
-        name = n;
-        cost = c;
-        ability = a;
+public class Card {
+    public String name;
+
+    @JsonCreator
+    public Card(@JsonProperty("name") String name) {
+        this.name = name;
     }
 
-    public int getCost() { return cost; }
     public String getName() { return name; }
 }

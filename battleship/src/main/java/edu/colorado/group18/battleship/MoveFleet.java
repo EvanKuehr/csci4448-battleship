@@ -100,13 +100,27 @@ public class MoveFleet extends Ability {
             int dy = dirMap.get(direction).y;
             int dx = dirMap.get(direction).x;
 
-            Cell[][] cellsCopy = board.cells;
+            Cell[][] cellsCopy = board.cells.clone();
             board.cells = new Cell[board.getY()][board.getX()];
             for (int y = 0; y < board.getY(); y++) {
                 for (int x = 0; x < board.getX(); x++) {
-                    if (cellsCopy[y][x] instanceof ShipCell) {
+                    if (y==0 && direction == Direction.SOUTH) {
+                        board.cells[y][x] = new Cell();
+                    }
+                    else if (x==0 && direction == Direction.EAST) {
+                        board.cells[y][x] = new Cell();
+                    }
+                    else if (y==board.getY()-1 && direction == Direction.NORTH) {
+                        board.cells[y][x] = new Cell();
+                    }
+                    else if (x==board.getX()-1 && direction == Direction.WEST) {
+                        board.cells[y][x] = new Cell();
+                    }
+
+                    if (canMove(y,x,direction,board)) {
                         board.cells[y+dy][x+dx] = cellsCopy[y][x];
                     }
+
                 }
             }
         }

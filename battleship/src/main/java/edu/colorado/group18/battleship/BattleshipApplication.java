@@ -21,20 +21,41 @@ public class BattleshipApplication {
 	}
 
 	public Game verifyGame(String room) {
-		return this.games.get(room);
+		Game retVal = this.games.get(room);
+		if(retVal == null) {
+			System.out.println("Error finding room " + room);
+		}
+		return retVal;
 	}
 
 	public AbilityPlayer verifyPlayer(String room, int userID) {
 		Game game = verifyGame(room);
 		AbilityPlayer player = null;
 
-		if (userID == 1) {
-			player = game.P1;
-		} else if (userID == 2) {
-			player = game.P2;
+		if (game != null) {
+			if (userID == 1) {
+				player = game.P1;
+			} else if (userID == 2) {
+				player = game.P2;
+			}
+		}
+
+		if (player == null) {
+			System.out.println("Error finding player " + userID);
 		}
 
 		return player;
+	}
+
+	public int getOpponentID(int userID) {
+		int oppID = -1;
+		if (userID == 1) {
+			oppID = 2;
+		}
+		else {
+			oppID = 1;
+		}
+		return oppID;
 	}
 
 	@GetMapping("/create")
@@ -93,11 +114,10 @@ public class BattleshipApplication {
 		}
 	}
 
-	@PostMapping("/set-fleet") //@RequestBody(value = "room") String room, @RequestBody(value = "player") int userID, @RequestBody(value = "placedFleet") String json
+	@PostMapping("/set-fleet")
 	public String setFleet(@RequestBody String bodyJson) {
 			try {
 				// convert JSON string to list of PlaceShipParams
-				//PlaceShipParams[] paramsList = new ObjectMapper().readValue(json, new TypeReference<PlaceShipParams[]>(){});
 				SetFleetParams body = new ObjectMapper().readValue(bodyJson, SetFleetParams.class);
 				AbilityPlayer player = verifyPlayer(body.room, body.player);
 				if (player != null) {
@@ -113,16 +133,236 @@ public class BattleshipApplication {
 			return "Error setting fleet";
 		}
 
-	@GetMapping("/")
+	@GetMapping("/update")
 	public String update(@RequestParam(value = "room") String room, @RequestParam(value = "player") int userID) {
 		AbilityPlayer player = verifyPlayer(room, userID);
-		return String.format("{\"your_turn\": %b, \"data\": %s}", verifyGame(room).isTurn(userID), player.toJson());
+		AbilityPlayer opponent = verifyPlayer(room, getOpponentID(userID));
+		//winStatus: -1 if game is in progress, 0 if you lost, 1 if you won
+		return String.format("{\"winStatus\": %d, \"yourTurn\": %b, \"yourData\": %s, \"opponentData\": %s}", verifyGame(room).getWinStatus(userID), verifyGame(room).isTurn(userID), player.toJson(), opponent.toJson());
 	}
 
-	@GetMapping("/player")
-	public String getPlayer(@RequestParam(value = "room", defaultValue = "") String room, @RequestParam(value = "player") int userID) {
-		AbilityPlayer player = verifyPlayer(room, userID);
-		//player.placeShip(player.getFleet()[2], 0, 0, 'h'); //this line can be used to test with ShipCells
-		return player.toJson();
+	private static class FinishParams {
+		String room;
+		int player;
+
+		@JsonCreator
+		public FinishParams(@JsonProperty("room") String room, @JsonProperty("player") int player) {
+			this.room = room;
+			this.player = player;
+		}
 	}
+
+	@PostMapping("/finish-turn")
+	public String finishTurn(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to FinishParams object
+			FinishParams body = new ObjectMapper().readValue(bodyJson, FinishParams.class);
+			return "Set your turn as finished? : " + verifyGame(body.room).finishTurn(body.player);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error finishing turn";
+		}
+	}
+
+	private static class BuyParams {
+		String room;
+		int player;
+		String cardName;
+
+		@JsonCreator
+		public BuyParams(@JsonProperty("room") String room, @JsonProperty("player") int player, @JsonProperty("cardName") String cardName) {
+			this.room = room;
+			this.player = player;
+			this.cardName = cardName;
+		}
+	}
+
+	@PostMapping("/buy")
+	public String buy(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to LocationParams object
+			BuyParams body = new ObjectMapper().readValue(bodyJson, BuyParams.class);
+			AbilityPlayer player = verifyPlayer(body.room, body.player);
+
+			if (player != null) {
+				return "Successfully bought card? : " + player.buyCard(body.cardName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error buying card";
+		}
+		return "Error buying card";
+	}
+
+
+
+	private static class LocationParams {
+		String room;
+		int player;
+		int x;
+		int y;
+
+		@JsonCreator
+		public LocationParams(@JsonProperty("room") String room, @JsonProperty("player") int player, @JsonProperty("y") int y, @JsonProperty("x") int x) {
+			this.room = room;
+			this.player = player;
+			this.y = y;
+			this.x = x;
+		}
+	}
+
+	@PostMapping("/missile")
+	public String missile(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to LocationParams object
+			LocationParams body = new ObjectMapper().readValue(bodyJson, LocationParams.class);
+			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
+
+			if (opponent != null) {
+				Missile m = new Missile();
+				m.use(opponent, body.x, body.y); //missile takes params in x,y order
+				return "Attacked opponent with missile";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error attacking with missile";
+		}
+		return "Error attacking with missile";
+	}
+
+	@PostMapping("/lazer")
+	public String lazer(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to LocationParams object
+			LocationParams body = new ObjectMapper().readValue(bodyJson, LocationParams.class);
+			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
+
+			if (opponent != null) {
+				verifyPlayer(body.room, body.player).removeCard("lazer");
+				SpaceLazer l = new SpaceLazer();
+				l.use(opponent, body.y, body.x);
+				return "Attacked opponent with lazer";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error attacking with lazer";
+		}
+		return "Error attacking with lazer";
+	}
+
+	@PostMapping("/repair")
+	public String repair(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to LocationParams object
+			LocationParams body = new ObjectMapper().readValue(bodyJson, LocationParams.class);
+			AbilityPlayer player = verifyPlayer(body.room, body.player);
+
+			if (player != null) {
+				player.removeCard("repair");
+				Repair r = new Repair();
+				return "Repair was successful? : " + r.use(player, body.y, body.x);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error with repairing";
+		}
+		return "Error with repairing";
+	}
+
+	@PostMapping("/sonar")
+	public String sonar(@RequestBody String bodyJson) { //needs to return a JSON representation of a sonar board
+		try {
+			// convert JSON string to LocationParams object
+			LocationParams body = new ObjectMapper().readValue(bodyJson, LocationParams.class);
+			AbilityPlayer player = verifyPlayer(body.room, body.player);
+			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
+
+			if (player != null && opponent != null) {
+				player.removeCard("sonar");
+				Sonar s = new Sonar();
+				Board resultBoard = s.use(player, opponent, body.x, body.y);
+				String retJson = "";
+				try {
+					retJson = new ObjectMapper().writeValueAsString(resultBoard);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return "Error with sonar";
+				}
+				return retJson;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error with sonar";
+		}
+		return "Error with sonar";
+	}
+
+	private static class MoveParams {
+		String room;
+		int player;
+		Direction dir;
+
+		@JsonCreator
+		public MoveParams(@JsonProperty("room") String room, @JsonProperty("player") int player, @JsonProperty("direction") Direction dir) {
+			this.room = room;
+			this.player = player;
+			this.dir = dir;
+		}
+	}
+
+	@PostMapping("/move")
+	public String move(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to MoveParams object
+			MoveParams body = new ObjectMapper().readValue(bodyJson, MoveParams.class);
+			AbilityPlayer player = verifyPlayer(body.room, body.player);
+
+			if (player != null) {
+				player.removeCard("move");
+				MoveFleet m = new MoveFleet(player);
+				m.use(new MoveCommand(m, body.dir));
+				return "Move was successful";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error with moving fleet";
+		}
+		return "Error with moving fleet";
+	}
+
+	private static class TorpedoParams {
+		String room;
+		int player;
+		int row; // y-coordinate/horizontal row to fire at (moves left to right across the row)
+		boolean surface;
+
+		@JsonCreator
+		public TorpedoParams(@JsonProperty("room") String room, @JsonProperty("player") int player, @JsonProperty("row") int row, @JsonProperty("surface") boolean surface) {
+			this.room = room;
+			this.player = player;
+			this.row = row;
+			this.surface = surface;
+		}
+	}
+
+	@PostMapping("/torpedo")
+	public String torpedo(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to LocationParams object
+			TorpedoParams body = new ObjectMapper().readValue(bodyJson, TorpedoParams.class);
+			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
+
+			if (opponent != null) {
+				verifyPlayer(body.room, body.player).removeCard("torpedo");
+				Torpedo t = new Torpedo();
+				t.use(opponent, body.row, body.surface);
+				return "Attacked opponent with torpedo";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error attacking with torpedo";
+		}
+		return "Error attacking with torpedo";
+	}
+
 }

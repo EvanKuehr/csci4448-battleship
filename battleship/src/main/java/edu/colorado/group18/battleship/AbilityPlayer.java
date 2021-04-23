@@ -5,32 +5,28 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Vector;
 
 public class AbilityPlayer extends DualBoardPlayer {
-    private int balance;
-    private Vector<Card> deck;
+    public Vector<Card> deck;
     private int numSonars;
     private int maxCards;
 
     public AbilityPlayer() {
         super();
-        this.balance = 0;
         this.deck = new Vector<Card>();
-        this.numSonars = 2;
+        this.numSonars = 100;
         this.maxCards = 3;
     }
 
     public AbilityPlayer(Ship fleet[], int maxCardNum) {
         super(fleet);
-        this.balance = 0;
         this.deck = new Vector<Card>();
-        this.numSonars = 2;
+        this.numSonars = 100;
         this.maxCards = maxCardNum;
     }
 
     public AbilityPlayer(Ship fleet[]) {
         super(fleet);
-        this.balance = 0;
         this.deck = new Vector<Card>();
-        this.numSonars = 2;
+        this.numSonars = 100;
         this.maxCards = 3;
     }
 
@@ -44,11 +40,6 @@ public class AbilityPlayer extends DualBoardPlayer {
         return json;
     }
 
-    public int incrementBalance(int num) {
-        balance += num;
-        return balance;
-    }
-
     public boolean decrementSonars() {
         if (numSonars > 0) {
             numSonars -= 1;
@@ -59,16 +50,15 @@ public class AbilityPlayer extends DualBoardPlayer {
         }
     }
 
-    public boolean useCard(String name) {
+    public boolean removeCard(String name) {
         Card card = null;
         for (Card c : deck) {
-            if (c.getName() == name) {
+            if (c.getName().equals(name)) {
                 card = c;
             }
         }
         if (card != null) {
             deck.remove(card);
-            //TODO: Implement the ability to use each card once user input is added (can then take parameters)
             return true;
         }
         else {
@@ -76,20 +66,29 @@ public class AbilityPlayer extends DualBoardPlayer {
         }
     }
 
-    public boolean buyCard(Card card) {
+    public boolean buyCard(String name) {
         boolean success = true;
-        if (balance >= card.getCost()) {
             if (deck.size()+1 > maxCards) {
+                //System.out.println("Debug: Over max limit");
                 success = false;
             }
             else {
-                balance -= card.getCost();
-                deck.add(card);
+                boolean foundDuplicate = false;
+                for (Card c: deck) {
+                    if (c.getName().equals(name)) {
+                        //System.out.println("Debug: Found duplicate card " + name);
+                        foundDuplicate = true;
+                    }
+                }
+
+                if (foundDuplicate) {
+                    success = false;
+                }
+                else {
+                    //System.out.println("Debug: Adding card " + name);
+                    deck.add(new Card(name));
+                }
             }
-        }
-        else {
-            success = false;
-        }
         return success;
     }
 }

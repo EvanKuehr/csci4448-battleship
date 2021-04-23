@@ -9,7 +9,7 @@ public class Torpedo extends Ability {
             board = opponent.getSubBoard();
         }
         int col;
-        for (col = 0; col < board.getY(); col++) {
+        for (col = 0; col < board.getX(); col++) {
             if (board.getCell(row, col) instanceof ShipCell) {
                 board.strike(row, col);
                 return board;

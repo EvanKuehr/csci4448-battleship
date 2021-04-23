@@ -275,4 +275,39 @@ public class BattleshipApplication {
 		return "Error with moving fleet";
 	}
 
+	private static class TorpedoParams {
+		String room;
+		int player;
+		int row; // y-coordinate/horizontal row to fire at (moves left to right across the row)
+		boolean surface;
+
+		@JsonCreator
+		public TorpedoParams(@JsonProperty("room") String room, @JsonProperty("player") int player, @JsonProperty("row") int row, @JsonProperty("surface") boolean surface) {
+			this.room = room;
+			this.player = player;
+			this.row = row;
+			this.surface = surface;
+		}
+	}
+
+	@PostMapping("/torpedo")
+	public String torpedo(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to LocationParams object
+			TorpedoParams body = new ObjectMapper().readValue(bodyJson, TorpedoParams.class);
+			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
+
+			if (opponent != null) {
+				verifyPlayer(body.room, body.player).removeCard("torpedo");
+				Torpedo t = new Torpedo();
+				t.use(opponent, body.row, body.surface);
+				return "Attacked opponent with torpedo";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error attacking with torpedo";
+		}
+		return "Error attacking with torpedo";
+	}
+
 }

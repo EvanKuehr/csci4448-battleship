@@ -1,0 +1,266 @@
+// This is the project stylesheet
+
+// Colors
+$black: rgba(0, 0, 0, 1);
+$black-2: rgba(13, 46, 32, 1);
+$deep-pink: rgba(255, 0, 199, 1);
+$dim-gray: rgba(94, 94, 94, 1);
+$dim-gray-2: rgba(106, 106, 106, 1);
+$green: rgba(15, 169, 88, 1);
+$light-sea-green: rgba(37, 144, 177, 1);
+$medium-sea-green: rgba(55, 208, 144, 1);
+$royal-blue: rgba(55, 125, 208, 1);
+$silver: rgba(201, 198, 194, 1);
+$transparent-cyan: rgba(0, 255, 209, 0.38);
+$transparent-lawn-green: rgba(66, 255, 0, 0.47);
+$transparent-orange: rgba(255, 184, 0, 0.62);
+$transparent-silver: rgba(196, 196, 196, 0.6);
+$white: rgba(255, 255, 255, 1);
+
+// Typographies
+@mixin helvetica-bold {
+  font-family: "Helvetica";
+  font-size: 24px;
+  font-weight: 700;
+  line-height: normal;
+}
+@mixin helvetica-regular {
+  font-family: "Helvetica";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+}
+@mixin quantico-24-regular {
+  font-family: "Quantico";
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 22px;
+}
+@mixin quantico-24-regular-line24 {
+  font-family: "Quantico";
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 24px;
+}
+@mixin quantico-26-bold {
+  font-family: "Quantico";
+  font-size: 26px;
+  font-weight: 700;
+  line-height: normal;
+}
+@mixin quantico-72-regular {
+  font-family: "Quantico";
+  font-size: 72px;
+  font-weight: 400;
+  line-height: normal;
+}
+@mixin roboto-24-regular {
+  font-family: "Roboto";
+  font-size: 24px;
+  font-weight: 400;
+  line-height: normal;
+}
+@mixin roboto-250-regular {
+  font-family: "Roboto";
+  font-size: 250px;
+  font-weight: 400;
+  line-height: normal;
+}
+@mixin roboto-26-black {
+  font-family: "Roboto";
+  font-size: 26px;
+  font-weight: 900;
+  line-height: normal;
+}
+@mixin roboto-36-black {
+  font-family: "Roboto";
+  font-size: 36px;
+  font-weight: 900;
+  line-height: normal;
+}
+
+.pickCardModal {
+    background-color: $white;
+    border-radius: 50px;
+    padding: 101px 40px 76.28px 39px;
+    display: flex;
+    align-items: flex-start;
+    background: linear-gradient(
+      180deg,
+      $silver 0%,
+      $dim-gray-2 100%
+    );
+    border: 5px solid $dim-gray;
+  }
+  .button {
+    margin-top: 191px;
+    margin-right: 28px;
+    border-radius: 25px;
+    padding: 24px 11px 17px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(
+      180deg,
+      $medium-sea-green 46%,
+      $black-2 100%
+    );
+    border: 1px solid $dim-gray;
+  }
+  .vector {
+    margin-bottom: 25px;
+  }
+  .name {
+    color: $white;
+    text-align: center;
+    margin-bottom: 15px;
+    @include roboto-26-black;
+  }
+  .description {
+    height: 137px;
+    width: 175px;
+    color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include roboto-24-regular;
+  }
+  .flexWrapperOne {
+    margin-right: 29px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .pickACard {
+    width: 440px;
+    color: $black;
+    text-align: center;
+    margin-bottom: 88px;
+    @include quantico-72-regular;
+  }
+  .flexWrapperTwo {
+    display: flex;
+    align-items: flex-start;
+  }
+  .buttonTwo {
+    margin-right: 28px;
+    border-radius: 25px;
+    padding: 41px 11px 17px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: linear-gradient(
+      180deg,
+      $medium-sea-green 51%,
+      $black-2 100%
+    );
+    border: 1px solid $dim-gray;
+  }
+  .spaceLaser1 {
+    margin-bottom: 57px;
+    margin-left: 10px;
+  }
+  .relativeWrapperTwo {
+    position: relative;
+  }
+  .nameTwo {
+    color: $white;
+    text-align: center;
+    position: absolute;
+    left: 3px;
+    top: -28px;
+    @include roboto-26-black;
+  }
+  .descriptionTwo {
+    height: 154px;
+    width: 175px;
+    color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    @include quantico-24-regular;
+  }
+  .buttonThree {
+    margin-right: 28px;
+    border-radius: 25px;
+    padding: 28px 11.5px 17.33px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(
+      180deg,
+      $medium-sea-green 48%,
+      $black-2 100%
+    );
+    border: 1px solid $dim-gray;
+  }
+  .repair1 {
+    margin-bottom: 28px;
+  }
+  .nameThree {
+    color: $white;
+    text-align: center;
+    margin-bottom: 21.67px;
+    @include roboto-26-black;
+  }
+  .descriptionThree {
+    height: 130px;
+    width: 175px;
+    color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include roboto-24-regular;
+  }
+  .buttonFour {
+    border-radius: 25px;
+    padding: 34px 11.5px 17.33px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(
+      180deg,
+      $medium-sea-green 48%,
+      $black-2 100%
+    );
+    border: 1px solid $dim-gray;
+  }
+  .torpedo1 {
+    margin-bottom: 34px;
+  }
+  .buttonFive {
+    margin-top: 191px;
+    border-radius: 25px;
+    padding: 13px 11px 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(
+      180deg,
+      $medium-sea-green 48%,
+      $black-2 100%
+    );
+    border: 1px solid $dim-gray;
+  }
+  .sonar1 {
+    margin-bottom: 74px;
+  }
+  .nameFour {
+    color: $white;
+    text-align: center;
+    position: absolute;
+    left: 42px;
+    top: -32px;
+    @include quantico-26-bold;
+  }
+  .descriptionFour {
+    height: 160px;
+    width: 176px;
+    color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    @include quantico-24-regular-line24;
+  }

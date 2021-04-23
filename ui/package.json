@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "ui",
+  "name": "battleship",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -28,10 +28,12 @@
     "preact-cli": "^2.0.0"
   },
   "dependencies": {
+    "node-sass": "^4.0.0",
     "preact": "^8.5.2",
     "preact-compat": "^3.17.0",
+    "preact-material-components": "^1.4.3",
     "preact-render-to-string": "^4.1.0",
     "preact-router": "^2.5.5",
-    "preact-material-components": "^1.4.3"
+    "sass-loader": "7.3.1"
   }
 }

@@ -7,6 +7,9 @@ import Profile from '../routes/profile';
 import NotFound from '../routes/404';
 // import Home from 'async!../routes/home';
 // import Profile from 'async!../routes/profile';
+import PickCard from './modals/PickCard';
+import TakeTurn from './modals/TakeTurn';
+import UseCard from './modals/UseCard';
 
 export default class App extends Component {
 	/** Gets fired when the route changes.
@@ -25,6 +28,9 @@ export default class App extends Component {
 				<Header selectedRoute={this.state.currentUrl} />
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
+					<PickCard path="/pick-card" />
+					<TakeTurn path="/take-turn" />
+					<UseCard path="/use-card" />
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
 					<NotFound default />

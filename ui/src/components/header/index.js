@@ -34,6 +34,9 @@ export default class Header extends Component {
 
 	goHome = this.linkTo('/');
 	goToMyProfile = this.linkTo('/profile');
+	goPickCard = this.linkTo('/pick-card');
+	goTakeTurn = this.linkTo('/take-turn');
+	goUseCard = this.linkTo('/use-card');
 
 	toggleDarkTheme = () => {
 		this.setState(
@@ -77,6 +80,18 @@ export default class Header extends Component {
 						<Drawer.DrawerItem selected={props.selectedRoute === '/profile'} onClick={this.goToMyProfile}>
 							<List.ItemGraphic>account_circle</List.ItemGraphic>
 							Profile
+						</Drawer.DrawerItem>
+						<Drawer.DrawerItem selected={props.selectedRoute === '/profile'} onClick={this.goPickCard}>
+							<List.ItemGraphic>account_circle</List.ItemGraphic>
+							Pick Card
+						</Drawer.DrawerItem>
+						<Drawer.DrawerItem selected={props.selectedRoute === '/profile'} onClick={this.goTakeTurn}>
+							<List.ItemGraphic>account_circle</List.ItemGraphic>
+							Take Turn
+						</Drawer.DrawerItem>
+						<Drawer.DrawerItem selected={props.selectedRoute === '/profile'} onClick={this.goUseCard}>
+							<List.ItemGraphic>account_circle</List.ItemGraphic>
+							Use Card
 						</Drawer.DrawerItem>
 					</Drawer.DrawerContent>
 				</Drawer>

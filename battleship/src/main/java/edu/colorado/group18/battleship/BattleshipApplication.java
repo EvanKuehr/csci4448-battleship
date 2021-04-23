@@ -141,6 +141,29 @@ public class BattleshipApplication {
 		return String.format("{\"winStatus\": %d, \"yourTurn\": %b, \"yourData\": %s, \"opponentData\": %s}", verifyGame(room).getWinStatus(userID), verifyGame(room).isTurn(userID), player.toJson(), opponent.toJson());
 	}
 
+	private static class FinishParams {
+		String room;
+		int player;
+
+		@JsonCreator
+		public FinishParams(@JsonProperty("room") String room, @JsonProperty("player") int player) {
+			this.room = room;
+			this.player = player;
+		}
+	}
+
+	@PostMapping("/finish-turn")
+	public String finishTurn(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to FinishParams object
+			FinishParams body = new ObjectMapper().readValue(bodyJson, FinishParams.class);
+			return "Set your turn as finished? : " + verifyGame(body.room).finishTurn(body.player);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error finishing turn";
+		}
+	}
+
 	private static class BuyParams {
 		String room;
 		int player;
@@ -170,6 +193,8 @@ public class BattleshipApplication {
 		}
 		return "Error buying card";
 	}
+
+
 
 	private static class LocationParams {
 		String room;

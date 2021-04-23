@@ -1,0 +1,87 @@
+// This is the project stylesheet
+
+// Colors
+$black: rgba(0, 0, 0, 1);
+$dim-gray: rgba(94, 94, 94, 1);
+$dim-gray-2: rgba(106, 106, 106, 1);
+$silver: rgba(201, 198, 194, 1);
+$transparent-silver: rgba(196, 196, 196, 0.6);
+
+// Typographies
+@mixin quantico-72-regular {
+  font-family: "Quantico";
+  font-size: 72px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.joinGameModal {
+  border-radius: 50px;
+  padding: 16px 84px 12.28px 83px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: linear-gradient(
+                  180deg,
+                  $silver 0%,
+                  $dim-gray-2 100%
+  );
+  border: 5px solid $dim-gray;
+}
+.welcomeTo {
+  height: 120px;
+  width: 573px;
+  color: $black;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-left: 225px;
+  @include quantico-72-regular;
+}
+.battleship1 {
+  margin-bottom: 9px;
+}
+.enterGameRoomCode {
+  color: $black;
+  text-align: center;
+  margin-bottom: 33px;
+  margin-left: 74px;
+  @include quantico-72-regular;
+}
+.flexWrapperOne {
+  background-color: $transparent-silver;
+  margin-bottom: 33px;
+  margin-left: 87px;
+  border-radius: 75px;
+  padding: 22px 411px 23px 412px;
+  display: flex;
+  align-items: center;
+  border: 1px solid $dim-gray;
+}
+.pipe {
+  color: $black;
+  text-align: center;
+  @include quantico-72-regular;
+}
+.group3 {
+  margin-left: 229px;
+  padding: 0 0 3px;
+  position: relative;
+}
+.rectangle5 {
+  width: 564px;
+  height: 98px;
+  background-color: $transparent-silver;
+  border-radius: 75px;
+  position: relative;
+  border: 1px solid $dim-gray;
+}
+.startGame {
+  width: 436px;
+  color: $black;
+  text-align: center;
+  position: absolute;
+  left: 65px;
+  top: 0;
+  @include quantico-72-regular;
+}

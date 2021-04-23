@@ -138,7 +138,37 @@ public class BattleshipApplication {
 		AbilityPlayer player = verifyPlayer(room, userID);
 		AbilityPlayer opponent = verifyPlayer(room, getOpponentID(userID));
 		//winStatus: -1 if game is in progress, 0 if you lost, 1 if you won
-		return String.format("{\"winStatus\": %d, \"yourTurn\": %b, \"your_data\": %s, \"opponent_data\": %s}", verifyGame(room).getWinStatus(userID), verifyGame(room).isTurn(userID), player.toJson(), opponent.toJson());
+		return String.format("{\"winStatus\": %d, \"yourTurn\": %b, \"yourData\": %s, \"opponentData\": %s}", verifyGame(room).getWinStatus(userID), verifyGame(room).isTurn(userID), player.toJson(), opponent.toJson());
+	}
+
+	private static class BuyParams {
+		String room;
+		int player;
+		String cardName;
+
+		@JsonCreator
+		public BuyParams(@JsonProperty("room") String room, @JsonProperty("player") int player, @JsonProperty("cardName") String cardName) {
+			this.room = room;
+			this.player = player;
+			this.cardName = cardName;
+		}
+	}
+
+	@PostMapping("/buy")
+	public String buy(@RequestBody String bodyJson) {
+		try {
+			// convert JSON string to LocationParams object
+			BuyParams body = new ObjectMapper().readValue(bodyJson, BuyParams.class);
+			AbilityPlayer player = verifyPlayer(body.room, body.player);
+
+			if (player != null) {
+				return "Successfully bought card? : " + player.buyCard(body.cardName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error buying card";
+		}
+		return "Error buying card";
 	}
 
 	private static class LocationParams {

@@ -126,13 +126,11 @@ public class PlayerTest {
     @Test
     public void abilityPlayerRemoveCard() {
         AbilityPlayer aPlayer = new AbilityPlayer(p1.getFleet(),1);
-        Card missile = new Card("Strike", 1,new Missile());
-        Card torpedo = new Card("Torpedo",2, new Torpedo());
 
-        assertTrue(aPlayer.buyCard(missile)); //buy a card
-        assertFalse(aPlayer.buyCard(torpedo)); //can't buy a card, inventory full
-        assertTrue(aPlayer.removeCard("Strike")); //Can use the card, in their inventory
-        assertFalse(aPlayer.removeCard("Strike")); //Can't use it, no longer in their inventory
+        assertTrue(aPlayer.buyCard("missile")); //buy a card
+        assertFalse(aPlayer.buyCard("torpedo")); //can't buy a card, inventory full
+        assertTrue(aPlayer.removeCard("missile")); //Can use the card, in their inventory
+        assertFalse(aPlayer.removeCard("missile")); //Can't use it, no longer in their inventory
     }
 }
 

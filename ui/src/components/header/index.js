@@ -37,6 +37,8 @@ export default class Header extends Component {
 	goPickCard = this.linkTo('/pick-card');
 	goTakeTurn = this.linkTo('/take-turn');
 	goUseCard = this.linkTo('/use-card');
+	goCreateGame = this.linkTo('/create');
+	goJoinGame = this.linkTo('/join');
 
 	toggleDarkTheme = () => {
 		this.setState(
@@ -92,6 +94,14 @@ export default class Header extends Component {
 						<Drawer.DrawerItem selected={props.selectedRoute === '/profile'} onClick={this.goUseCard}>
 							<List.ItemGraphic>account_circle</List.ItemGraphic>
 							Use Card
+						</Drawer.DrawerItem>
+						<Drawer.DrawerItem selected={props.selectedRoute === '/create'} onClick={this.goCreateGame}>
+							<List.ItemGraphic>account_circle</List.ItemGraphic>
+							Create Game
+						</Drawer.DrawerItem>
+						<Drawer.DrawerItem selected={props.selectedRoute === '/join'} onClick={this.goJoinGame}>
+							<List.ItemGraphic>account_circle</List.ItemGraphic>
+							Join Game
 						</Drawer.DrawerItem>
 					</Drawer.DrawerContent>
 				</Drawer>

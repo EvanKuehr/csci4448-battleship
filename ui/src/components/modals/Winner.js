@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./style/Winner.scss";
+import React from 'react';
+import styles from './style/Winner.scss';
 
 const WinnerModal = () => (
     <div className={styles.winnerModal}>

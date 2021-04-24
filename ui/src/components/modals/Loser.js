@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./style/Loser.scss";
+import React from 'react';
+import styles from './style/Loser.scss';
 
 const LoserModal = () => (
     <div className={styles.loserModal}>

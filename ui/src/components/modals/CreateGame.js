@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./style/CreateGame.scss";
+import React from 'react';
+import styles from './style/CreateGame.scss';
 
 const CreateGameModal = () => (
     <div className={styles.createGameModal}>

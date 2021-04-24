@@ -10,6 +10,7 @@ import NotFound from '../routes/404';
 import PickCard from './modals/PickCard';
 import TakeTurn from './modals/TakeTurn';
 import UseCard from './modals/UseCard';
+import CreateGame from "./modals/CreateGame";
 
 export default class App extends Component {
 	/** Gets fired when the route changes.

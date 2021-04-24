@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./style/JoinGame.scss";
+import React from 'react';
+import styles from './style/JoinGame.scss';
 
 const JoinGameModal = () => (
     <div className={styles.joinGameModal}>

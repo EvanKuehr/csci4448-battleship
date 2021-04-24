@@ -11,6 +11,7 @@ import PickCard from './modals/PickCard';
 import TakeTurn from './modals/TakeTurn';
 import UseCard from './modals/UseCard';
 import CreateGame from "./modals/CreateGame";
+import JoinGame from "./modals/JoinGame";
 
 export default class App extends Component {
 	/** Gets fired when the route changes.
@@ -29,6 +30,8 @@ export default class App extends Component {
 				<Header selectedRoute={this.state.currentUrl} />
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
+					<CreateGame path="/create" />
+					<JoinGame path="/join" />
 					<PickCard path="/pick-card" />
 					<TakeTurn path="/take-turn" />
 					<UseCard path="/use-card" />

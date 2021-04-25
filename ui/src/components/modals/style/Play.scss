@@ -59,6 +59,12 @@ $transparent-silver: rgba(196, 196, 196, 0.6);
   margin-bottom: 164px;
   background-color: $silver-2;
 }
+
+.orient {
+  width: 100px;
+  height: 30px;
+  background-color: $silver-2;
+}
 .enemyBoard {
   color: $black;
   text-align: center;
@@ -130,3 +136,10 @@ $transparent-silver: rgba(196, 196, 196, 0.6);
    background-color: #2196F3;
    padding: 10px;
  }
+
+.placeText1 {
+  align-items: center;
+  text-align: center;
+  position: center;
+  display: flex;
+}

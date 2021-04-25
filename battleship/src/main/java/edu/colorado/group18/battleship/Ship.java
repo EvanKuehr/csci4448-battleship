@@ -45,6 +45,8 @@ public class Ship implements PropertyChangeListener {
         return this.captainsLocation;
     }
 
+    public boolean getPlaced() { return this.placed; }
+
     // helper function for hit propertyChange function
     private boolean isSunk() {
         for (boolean cell : this.cells) {

@@ -16,11 +16,14 @@ $transparent-silver: rgba(196, 196, 196, 0.6);
 }
 
 .joinGameModal {
-  border-radius: 50px;
-  padding: 16px 84px 12.28px 83px;
+  height: 100%;
+  border-radius: 0px;
+  padding: 50px 84px 65.28px 83px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(
                   180deg,
                   $silver 0%,
@@ -32,20 +35,24 @@ $transparent-silver: rgba(196, 196, 196, 0.6);
   height: 120px;
   width: 573px;
   color: $black;
-  display: flex;
+  display: contents;
   align-items: center;
   text-align: center;
-  margin-left: 225px;
+  margin-left: auto;
+  margin-right: auto;
   @include quantico-72-regular;
 }
 .battleship1 {
-  margin-bottom: 9px;
+  margin-bottom: 28px;
 }
 .enterGameRoomCode {
   color: $black;
   text-align: center;
+  display: contents;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 33px;
-  margin-left: 74px;
   @include quantico-72-regular;
 }
 .flexWrapperOne {
@@ -58,10 +65,9 @@ $transparent-silver: rgba(196, 196, 196, 0.6);
   align-items: center;
   border: 1px solid $dim-gray;
 }
-.pipe {
-  color: $black;
-  text-align: center;
-  @include quantico-72-regular;
+.textbox {
+  width: 100px;
+  height: 50px;
 }
 .group3 {
   margin-left: 229px;
@@ -69,11 +75,13 @@ $transparent-silver: rgba(196, 196, 196, 0.6);
   position: relative;
 }
 .rectangle5 {
-  width: 564px;
-  height: 98px;
+  width: 100px;
+  height: 50px;
   background-color: $transparent-silver;
   border-radius: 75px;
   position: relative;
+  top: 50px;
+  left: -100px;
   border: 1px solid $dim-gray;
 }
 .startGame {

@@ -16,11 +16,14 @@ $transparent-silver: rgba(196, 196, 196, 0.6);
 }
 
 .welcomeModal {
-    border-radius: 50px;
-    padding: 16px 84px 65.28px 83px;
+    height: 100%;
+    border-radius: 0px;
+    padding: 50px 84px 65.28px 83px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     background: linear-gradient(
     180deg,
     $silver 0%,
@@ -32,10 +35,11 @@ $transparent-silver: rgba(196, 196, 196, 0.6);
     height: 120px;
     width: 573px;
     color: $black;
-    display: flex;
+    display: contents;
     align-items: center;
     text-align: center;
-    margin-left: 225px;
+    margin-left: auto;
+    margin-right: auto;
     @include quantico-72-regular;
 }
 .battleship1 {

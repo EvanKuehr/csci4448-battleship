@@ -13,49 +13,6 @@ import 'preact-material-components/TopAppBar/style.css';
 // import style from './style';
 
 export default class Header extends Component {
-	closeDrawer() {
-		this.drawer.MDComponent.open = false;
-		this.state = {
-			darkThemeEnabled: false
-		};
-	}
-
-	openDrawer = () => (this.drawer.MDComponent.open = true);
-
-	openSettings = () => this.dialog.MDComponent.show();
-
-	drawerRef = drawer => (this.drawer = drawer);
-	dialogRef = dialog => (this.dialog = dialog);
-
-	linkTo = path => () => {
-		route(path);
-		this.closeDrawer();
-	};
-
-	goHome = this.linkTo('/');
-	goToMyProfile = this.linkTo('/profile');
-	goPickCard = this.linkTo('/pick-card');
-	goTakeTurn = this.linkTo('/take-turn');
-	goUseCard = this.linkTo('/use-card');
-	goCreateGame = this.linkTo('/create');
-	goJoinGame = this.linkTo('/join');
-
-	toggleDarkTheme = () => {
-		this.setState(
-			{
-				darkThemeEnabled: !this.state.darkThemeEnabled
-			},
-			() => {
-				if (this.state.darkThemeEnabled) {
-					document.body.classList.add('mdc-theme--dark');
-				}
-				else {
-					document.body.classList.remove('mdc-theme--dark');
-				}
-			}
-		);
-	}
-
 	render(props) {
 		console.log(props.selectedRoute);
 		return (
@@ -63,59 +20,10 @@ export default class Header extends Component {
 				<TopAppBar className="topappbar">
 					<TopAppBar.Row>
 						<TopAppBar.Section align-start>
-							<TopAppBar.Icon menu onClick={this.openDrawer}>
-								menu
-							</TopAppBar.Icon>
-							<TopAppBar.Title>Preact app</TopAppBar.Title>
-						</TopAppBar.Section>
-						<TopAppBar.Section align-end shrink-to-fit onClick={this.openSettings}>
-							<TopAppBar.Icon>settings</TopAppBar.Icon>
+							<TopAppBar.Title>CSCI 4448 - Battleship</TopAppBar.Title>
 						</TopAppBar.Section>
 					</TopAppBar.Row>
 				</TopAppBar>
-				<Drawer modal ref={this.drawerRef}>
-					<Drawer.DrawerContent>
-						<Drawer.DrawerItem selected={props.selectedRoute === '/'} onClick={this.goHome}>
-							<List.ItemGraphic>home</List.ItemGraphic>
-							Home
-						</Drawer.DrawerItem>
-						<Drawer.DrawerItem selected={props.selectedRoute === '/profile'} onClick={this.goToMyProfile}>
-							<List.ItemGraphic>account_circle</List.ItemGraphic>
-							Profile
-						</Drawer.DrawerItem>
-						<Drawer.DrawerItem selected={props.selectedRoute === '/profile'} onClick={this.goPickCard}>
-							<List.ItemGraphic>account_circle</List.ItemGraphic>
-							Pick Card
-						</Drawer.DrawerItem>
-						<Drawer.DrawerItem selected={props.selectedRoute === '/profile'} onClick={this.goTakeTurn}>
-							<List.ItemGraphic>account_circle</List.ItemGraphic>
-							Take Turn
-						</Drawer.DrawerItem>
-						<Drawer.DrawerItem selected={props.selectedRoute === '/profile'} onClick={this.goUseCard}>
-							<List.ItemGraphic>account_circle</List.ItemGraphic>
-							Use Card
-						</Drawer.DrawerItem>
-						<Drawer.DrawerItem selected={props.selectedRoute === '/create'} onClick={this.goCreateGame}>
-							<List.ItemGraphic>account_circle</List.ItemGraphic>
-							Create Game
-						</Drawer.DrawerItem>
-						<Drawer.DrawerItem selected={props.selectedRoute === '/join'} onClick={this.goJoinGame}>
-							<List.ItemGraphic>account_circle</List.ItemGraphic>
-							Join Game
-						</Drawer.DrawerItem>
-					</Drawer.DrawerContent>
-				</Drawer>
-				<Dialog ref={this.dialogRef}>
-					<Dialog.Header>Settings</Dialog.Header>
-					<Dialog.Body>
-						<div>
-							Enable dark theme <Switch onClick={this.toggleDarkTheme} />
-						</div>
-					</Dialog.Body>
-					<Dialog.Footer>
-						<Dialog.FooterButton accept>OK</Dialog.FooterButton>
-					</Dialog.Footer>
-				</Dialog>
 			</div>
 		);
 	}

@@ -1,0 +1,132 @@
+// This is the project stylesheet
+
+// Colors
+$black: rgba(0, 0, 0, 1);
+$dim-gray: rgba(94, 94, 94, 1);
+$dim-gray-2: rgba(106, 106, 106, 1);
+$silver: rgba(201, 198, 194, 1);
+$silver-2: rgba(196, 196, 196, 1);
+$transparent-silver: rgba(196, 196, 196, 0.6);
+
+// Typographies
+@mixin quantico-18-regular {
+  font-family: "Quantico";
+  font-size: 18px;
+  font-weight: 400;
+  line-height: normal;
+}
+@mixin quantico-24-regular {
+  font-family: "Quantico";
+  font-size: 24px;
+  font-weight: 400;
+  line-height: normal;
+}
+.component1 {
+  padding: 50px 0px 0 0;
+}
+.flexWrapperOne {
+  border-radius: 0px;
+  padding: 14px 0px 10.38px 14px;
+  display: flex;
+  align-items: flex-start;
+  background: linear-gradient(
+                  180deg,
+                  $silver 0%,
+                  $dim-gray-2 100%
+  );
+  position: relative;
+  border: 5px solid $dim-gray;
+  height: 100%;
+}
+.flexWrapperThree {
+  margin-right: 12px;
+  padding: 153px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.yourBoard {
+  color: $black;
+  text-align: center;
+  margin-bottom: 163px;
+  margin-left: 10px;
+  @include quantico-24-regular;
+}
+
+.dropdown {
+  width: 100px;
+  height: 30px;
+  margin-bottom: 164px;
+  background-color: $silver-2;
+}
+.enemyBoard {
+  color: $black;
+  text-align: center;
+  @include quantico-24-regular;
+}
+.flexWrapperFour {
+  margin-right: 31px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.vector {
+  &:not(:last-of-type) {
+    margin-bottom: 24.1px;
+  }
+}
+.flexWrapperFive {
+  padding: 23px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.battleship1 {
+  margin-bottom: 33px;
+  margin-left: 33px;
+}
+.rectangle9 {
+  width: 594px;
+  height: 217px;
+  background-color: $silver-2;
+  margin-bottom: 2px;
+}
+.flexWrapperTwo {
+  background-color: $transparent-silver;
+  margin-left: 95px;
+  border-radius: 75px;
+  padding: 23px 95px 22px 96px;
+  display: flex;
+  align-items: center;
+  border: 1px solid $dim-gray;
+}
+.gameCode {
+  height: 34px;
+  width: 250px;
+  color: $black;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  position: center;
+  @include quantico-18-regular;
+}
+.yourGameRoomCode {
+  height: 129px;
+  width: 300px;
+  color: $black;
+  margin-left: 160px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  position: center;
+  margin-bottom: 2px;
+  @include quantico-24-regular;
+}
+
+.gridContainer {
+   display: grid;
+   grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto auto auto auto auto auto;
+   background-color: #2196F3;
+   padding: 10px;
+ }

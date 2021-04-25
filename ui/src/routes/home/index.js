@@ -1,27 +1,47 @@
-import { h, Component } from 'preact';
-import Card from 'preact-material-components/Card';
-import 'preact-material-components/Card/style.css';
-import 'preact-material-components/Button/style.css';
-import style from './style';
+import React from 'react';
+import { h, Component, Link } from 'preact';
+import { route } from 'preact-router';
+import styles from './Welcome.scss';
+import $ from "jquery";
 
-export default class Home extends Component {
-	render() {
-		return (
-			<div class={`${style.home} page`}>
-				<h1>Home route</h1>
-				<Card>
-					<div class={style.cardHeader}>
-						<h2 class=" mdc-typography--title">Home card</h2>
-						<div class=" mdc-typography--caption">Welcome to home route</div>
-					</div>
-					<div class={style.cardBody}>
-						Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-					</div>
-					<Card.Actions>
-						<Card.ActionButton>OKAY</Card.ActionButton>
-					</Card.Actions>
-				</Card>
-			</div>
-		);
-	}
+function createRedirect() {
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/create',
+        success: function(response) {
+            response = JSON.parse(response);
+            return (route("/play?room=" +response.room + "&player=" +  response.player));
+        }
+    });
+    return false;
+}
+
+function joinRedirect() {
+    return (route("/join"));
+}
+
+
+export default class WelcomeModal extends Component {
+    render() {
+        return (
+            <div className={styles.welcomeModal}>
+                <p className={styles.welcomeTo}>WELCOME TO</p>
+                <img
+                    alt=""
+                    className={styles.battleship1}
+                    src="https://static.overlay-tech.com/assets/4ea1e74f-d3b4-489e-80f6-a88290d5bc39.png"
+                />
+                <div className={styles.flexWrapperOne}>
+                    <div className={styles.group1}>
+                        <div className={styles.rectangle2} />
+                        <button onClick={createRedirect} className={styles.createGame}>CREATE GAME</button>
+                    </div>
+                    <div className={styles.group1}>
+                        <div className={styles.rectangle2} />
+                        <button onClick={joinRedirect}className={styles.createGame}>JOIN GAME</button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }

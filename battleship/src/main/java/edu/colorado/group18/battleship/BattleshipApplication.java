@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 @SpringBootApplication
+@CrossOrigin
 @RestController
 public class BattleshipApplication {
 

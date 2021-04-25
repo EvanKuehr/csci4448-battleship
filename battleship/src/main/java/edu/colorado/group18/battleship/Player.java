@@ -43,6 +43,7 @@ public class Player {
                 }
             }
         }
+        board.removeStrayShipCells();
         return success;
     }
 
@@ -74,6 +75,17 @@ public class Player {
         for (Ship ship : fleet) { //for every ship in the player's fleet
             if (ship.getSunk()) {
                 retVal = true; //one of their ships is sunk
+                break;
+            }
+        }
+        return retVal;
+    }
+
+    public boolean placedAllShips() {
+        boolean retVal = true;
+        for (Ship ship : fleet) { //for every ship in the player's fleet
+            if (!ship.getPlaced()) {
+                retVal = false; //one of their ships is sunk
                 break;
             }
         }

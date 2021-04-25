@@ -36,15 +36,20 @@ public class Game {
     }
 
     public boolean isTurn(int p) {
-        if (p == 1) {
-            return this.turn % 2 != 0;
+        if (P1.placedAllShips() && P2.placedAllShips()) {
+            if (p == 1) {
+                return this.turn % 2 != 0;
+            }
+            return this.turn % 2 == 0;
         }
-        return this.turn % 2 == 0;
+        else {
+            return false;
+        }
     }
 
     public boolean finishTurn(int playerID) {
         //Check that it is currently this players turn
-        if (playerID == turn) {
+        if (playerID == turn && P1.placedAllShips() && P2.placedAllShips()) {
             //Switch whose turn it is
             this.turn += 1;
             if (this.turn > 2) {

@@ -146,8 +146,8 @@ function handleUpdate(response) {
         document.getElementById("placeShips").style.display = "none";
         if (response.yourTurn && !doingTurn) {
             doingTurn = true;
-            //TO DO: PROMPT USER TO DO TURN, CHECK THAT ENEMY HAS PLACED SHIPS
-            alert("its your turn! CHECK ENEMY HAS PLACED, PLACE SHIP HAS ISSUES");
+            //TO DO: PROMPT USER TO DO TURN
+            alert("It's your turn!");
         }
     }
     updateBoard(response.yourData.board.cells, document.querySelector("#myTop"), true);

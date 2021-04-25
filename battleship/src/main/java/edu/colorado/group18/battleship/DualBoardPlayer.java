@@ -72,6 +72,12 @@ public class DualBoardPlayer extends Player {
 				}
 			}
 		}
+		if (submerged) {
+			subBoard.removeStrayShipCells();
+		}
+		else {
+			board.removeStrayShipCells();
+		}
 		return success;
 	}
 }

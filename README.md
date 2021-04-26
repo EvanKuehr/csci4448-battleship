@@ -16,7 +16,7 @@ Battleship is a classic two player game in which players use strategy to to sear
 6. in another terminal
    1. `cd ui`
    2. `npm install`
-   3. `npm yarn dev`
+   3. `yarn dev`
 7. for each player
    1. open a browser to local host port given by second terminal
    2. first player CREATE GAME

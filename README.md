@@ -1,16 +1,17 @@
 # CSCI4448 - Battleship Game
 Names: Obaid Ebadi, Nate Jones, Evan Kuehr, Andrew Mitchell
 
-# Description
+## Description
 Battleship is a classic two player game in which players use strategy to to search for the enemy’s fleet of ships and try to take them down one by one. The winner of the game is the player that can take out the entire enemy’s fleet before them. There are some modifications we made to the game, including the concept of a “captains quarters”, underwater ship placement, and a player being able to move their entire fleet.
 
-# Specifications
-- Java, Spring Framework
-- Node.js, Preact Framework (lightweight React alternative)
-- minimum 1 computer to run the Java based game server and x2 browser tabs to run each game.
-Future/Potential Specifications
-- ngrok (the current specifications allows for games to be played across a local network but a reverse proxy like ngrok or nginx would be required to run the game server remotely.)
-- Vercel or any other client hosting platforms to access the client without having to run it locally.
+* Specifications
+   - Java, Spring Framework
+   - Node.js, Preact Framework (lightweight React alternative)
+   - minimum 1 computer to run the Java based game server and x2 browser tabs to run each game.
+
+* Future/Potential Specifications
+   - ngrok (the current specifications allows for games to be played across a local network but a reverse proxy like ngrok or nginx would be required to run the game server remotely.)
+   - Vercel or any other client hosting platforms to access the client without having to run it locally.
 
 
 ## Install and Run Game

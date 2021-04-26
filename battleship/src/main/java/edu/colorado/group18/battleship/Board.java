@@ -39,12 +39,17 @@ public class Board {
         ShipCell currCell = null;
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < cols; x++) {
-                if (cells[y][x] instanceof ShipCell) {
-                    currCell = (ShipCell) cells[y][x];
-                    if (currCell.getShipRef().getPlaced() == false) {
-                        cells[y][x] = new Cell();
-                    }
-                }
+                checkCellHelper(y, x);
+            }
+        }
+    }
+
+    private void checkCellHelper(int y, int x) {
+        ShipCell currCell = null;
+        if (cells[y][x] instanceof ShipCell) {
+            currCell = (ShipCell) cells[y][x];
+            if (currCell.getShipRef().getPlaced() == false) {
+                cells[y][x] = new Cell();
             }
         }
     }

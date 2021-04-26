@@ -79,24 +79,48 @@ $white: rgba(255, 255, 255, 1);
   line-height: normal;
 }
 
+//.pickCardModal {
+//    background-color: $white;
+//    border-radius: 50px;
+//    padding: 101px 40px 76.28px 39px;
+//    display: flex;
+//    align-items: flex-start;
+//    background: linear-gradient(
+//      180deg,
+//      $silver 0%,
+//      $dim-gray-2 100%
+//    );
+//    border: 5px solid $dim-gray;
+//  }
+
 .pickCardModal {
-    background-color: $white;
-    border-radius: 50px;
-    padding: 101px 40px 76.28px 39px;
-    display: flex;
-    align-items: flex-start;
-    background: linear-gradient(
-      180deg,
-      $silver 0%,
-      $dim-gray-2 100%
-    );
-    border: 5px solid $dim-gray;
-  }
+  border-radius: 50px;
+  padding: 107px 50px 109.28px 49px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: linear-gradient(
+                  180deg,
+                  $silver 0%,
+                  $dim-gray-2 100%
+  );
+  border: 5px solid $dim-gray;
+  width: 1500px;
+  height: 700px;
+  transition: 1.1s ease-out;
+  transform: scale(0.7);
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-top: -400px;
+  margin-left: -700px;
+}
+
   .button {
-    margin-top: 191px;
-    margin-right: 28px;
+    margin-top: 20px;
+    margin-left: 60px;
     border-radius: 25px;
-    padding: 24px 11px 17px 12px;
+    padding: 41px 11px 17px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -132,14 +156,20 @@ $white: rgba(255, 255, 255, 1);
     align-items: center;
   }
   .pickACard {
-    width: 440px;
+    margin-left: 500px;
+    margin-bottom: 50px;
+    margin-top: -50px;
+    width: 100%;
     color: $black;
+    display: flex;
     text-align: center;
-    margin-bottom: 88px;
+    align-items: center;
     @include quantico-72-regular;
   }
   .flexWrapperTwo {
+    margin-top: -75px;
     display: flex;
+    flex-direction: row;
     align-items: flex-start;
   }
   .buttonTwo {
@@ -157,7 +187,7 @@ $white: rgba(255, 255, 255, 1);
     border: 1px solid $dim-gray;
   }
   .spaceLaser1 {
-    margin-bottom: 57px;
+    margin-bottom: 20px;
     margin-left: 10px;
   }
   .relativeWrapperTwo {
@@ -244,7 +274,7 @@ $white: rgba(255, 255, 255, 1);
     border: 1px solid $dim-gray;
   }
   .sonar1 {
-    margin-bottom: 74px;
+    margin-bottom: 25px;
   }
   .nameFour {
     color: $white;

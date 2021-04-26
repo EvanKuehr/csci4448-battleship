@@ -3,7 +3,7 @@ package edu.colorado.group18.battleship;
 import java.util.HashMap;
 import java.util.Stack;
 
-public class MoveFleet extends Ability {
+public class MoveFleet implements Ability {
     private Stack <Command> undoStack;
     private Stack <Command> redoStack;
     private AbilityPlayer player;

@@ -1,6 +1,6 @@
 package edu.colorado.group18.battleship;
 
-public class Sonar extends Ability {
+public class Sonar implements Ability {
     public Board use(AbilityPlayer self, Player opponent, int x, int y) {
         Board oppBoard = opponent.getBoard();
         //if (opponent.hasSunkenShip()) { //removed this check for the actual game

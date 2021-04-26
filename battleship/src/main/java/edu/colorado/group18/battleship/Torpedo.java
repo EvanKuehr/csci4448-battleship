@@ -1,6 +1,6 @@
 package edu.colorado.group18.battleship;
 
-public class Torpedo extends Ability {
+public class Torpedo implements Ability {
     public Board use(AbilityPlayer opponent, int row, boolean surface) {
         Board board;
         if (surface) {

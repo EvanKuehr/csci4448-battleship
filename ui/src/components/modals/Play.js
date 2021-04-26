@@ -20,6 +20,29 @@ var reactInfo = null;
 var usingCard = "";
 var usingAbility = false;
 var abilityInput = -1;
+var usingSonar = false;
+
+function useSonar(sonarBoard) {
+    usingSonar = true;
+    let gridContainer = document.querySelector("#enemyTop");
+    let index = 0;
+    let color = "";
+    console.log(sonarBoard);
+    for (let i=0; i<10; i++) {
+        for(let j=0; j<10; j++) {
+            if (sonarBoard[i][j].hasOwnProperty('hasShip')) {
+                if (sonarBoard[i][j].hasShip == 0) {
+                    color = "rgba(256, 256, 256, 1)";
+                } else {
+                    color = "rgba(9, 150, 49, 1)";
+                }
+                gridContainer.childNodes[index].style.backgroundColor = color;
+            }
+            index += 1;
+        }
+    }
+    setTimeout(function(){usingSonar=false}, 8000); //allow normal board updates in 5 seconds
+}
 
 function detectClick(x, y, ownGrid, topGrid) {
     if (placedShips < 3 && ownGrid) {
@@ -140,7 +163,8 @@ function detectClick(x, y, ownGrid, topGrid) {
                                     "x": x
                                 }),
                                 success: function(response) {
-                                    getUpdate(room, player);
+                                    response = JSON.parse(response);
+                                    useSonar(response.cells);
                                 }
                             });
                             abilityInput = -1;
@@ -187,7 +211,7 @@ function useCard(cardName) {
                 abilityInput = 3;
                 break;
             case "sonar":
-                alert("Select an enemy cell to use the sonar on");
+                alert("Select an enemy cell to use the sonar on (surface only)");
                 abilityInput = 4;
                 break;
             default:
@@ -331,10 +355,12 @@ function handleUpdate(response) {
             doingTurn = false;
         }
     }
-    updateBoard(response.yourData.board.cells, document.querySelector("#myTop"), true);
-    updateBoard(response.yourData.subBoard.cells, document.querySelector("#myBottom"), true);
-    updateBoard(response.opponentData.board.cells, document.querySelector("#enemyTop"), false);
-    updateBoard(response.opponentData.subBoard.cells, document.querySelector("#enemyBottom"), false);
+    if (!usingSonar) {
+        updateBoard(response.yourData.board.cells, document.querySelector("#myTop"), true);
+        updateBoard(response.yourData.subBoard.cells, document.querySelector("#myBottom"), true);
+        updateBoard(response.opponentData.board.cells, document.querySelector("#enemyTop"), false);
+        updateBoard(response.opponentData.subBoard.cells, document.querySelector("#enemyBottom"), false);
+    }
     updateCards(response.yourData.deck);
 }
 

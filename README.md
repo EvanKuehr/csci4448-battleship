@@ -1,6 +1,8 @@
 # CSCI4448 - Battleship Game
 Names: Obaid Ebadi, Nate Jones, Evan Kuehr, Andrew Mitchell
 
+See further documentation in `project_documentation.pdf`
+
 ## Description
 Battleship is a classic two player game in which players use strategy to to search for the enemy’s fleet of ships and try to take them down one by one. The winner of the game is the player that can take out the entire enemy’s fleet before them. There are some modifications we made to the game, including the concept of a “captains quarters”, underwater ship placement, and a player being able to move their entire fleet.
 

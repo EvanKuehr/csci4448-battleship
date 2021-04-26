@@ -198,9 +198,9 @@ public class BattleshipApplication {
 			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
 
 			if (opponent != null) {
-				verifyGame(body.room).finishTurn(body.player);
 				Missile m = new Missile();
 				m.use(opponent, body.x, body.y); //missile takes params in x,y order
+				verifyGame(body.room).finishTurn(body.player);
 				return "Attacked opponent with missile";
 			}
 		} catch (Exception e) {
@@ -218,10 +218,10 @@ public class BattleshipApplication {
 			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
 
 			if (opponent != null) {
-				verifyGame(body.room).finishTurn(body.player);
 				verifyPlayer(body.room, body.player).removeCard("lazer");
 				SpaceLazer l = new SpaceLazer();
 				l.use(opponent, body.y, body.x);
+				verifyGame(body.room).finishTurn(body.player);
 				return "Attacked opponent with lazer";
 			}
 		} catch (Exception e) {
@@ -239,9 +239,9 @@ public class BattleshipApplication {
 			AbilityPlayer player = verifyPlayer(body.room, body.player);
 
 			if (player != null) {
-				verifyGame(body.room).finishTurn(body.player);
 				player.removeCard("repair");
 				Repair r = new Repair();
+				verifyGame(body.room).finishTurn(body.player);
 				return "Repair was successful? : " + r.use(player, body.y, body.x);
 			}
 		} catch (Exception e) {
@@ -260,10 +260,10 @@ public class BattleshipApplication {
 			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
 
 			if (player != null && opponent != null) {
-				verifyGame(body.room).finishTurn(body.player);
 				player.removeCard("sonar");
 				Sonar s = new Sonar();
 				Board resultBoard = s.use(player, opponent, body.x, body.y);
+				verifyGame(body.room).finishTurn(body.player);
 				String retJson = "";
 				try {
 					retJson = new ObjectMapper().writeValueAsString(resultBoard);
@@ -301,10 +301,10 @@ public class BattleshipApplication {
 			AbilityPlayer player = verifyPlayer(body.room, body.player);
 
 			if (player != null) {
-				verifyGame(body.room).finishTurn(body.player);
 				player.removeCard("move");
 				MoveFleet m = new MoveFleet(player);
 				m.use(new MoveCommand(m, body.dir));
+				verifyGame(body.room).finishTurn(body.player);
 				return "Move was successful";
 			}
 		} catch (Exception e) {
@@ -337,10 +337,10 @@ public class BattleshipApplication {
 			AbilityPlayer opponent = verifyPlayer(body.room, getOpponentID(body.player));
 
 			if (opponent != null) {
-				verifyGame(body.room).finishTurn(body.player);
 				verifyPlayer(body.room, body.player).removeCard("torpedo");
 				Torpedo t = new Torpedo();
 				t.use(opponent, body.row, body.surface);
+				verifyGame(body.room).finishTurn(body.player);
 				return "Attacked opponent with torpedo";
 			}
 		} catch (Exception e) {

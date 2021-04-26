@@ -21,6 +21,7 @@ var usingCard = "";
 var usingAbility = false;
 var abilityInput = -1;
 var usingSonar = false;
+var intervalID = -1;
 
 function useSonar(sonarBoard) {
     usingSonar = true;
@@ -440,7 +441,7 @@ export default class Play extends Component {
     componentDidMount() {
         room = this.props.room;
         player = this.props.player;
-        const intervalID = createInterval(getUpdate, room, player,3000);
+        intervalID = createInterval(getUpdate, room, player,3000);
         if (placedShips == 0) {
             makeGrids();
         }

@@ -16,7 +16,8 @@ $transparent-silver: rgba(196, 196, 196, 0.6);
 }
 
 .winnerModal {
-  border-radius: 50px;
+  height: 100%;
+  border-radius: 0px;
   padding: 88px 95px 40.28px;
   display: flex;
   flex-direction: column;

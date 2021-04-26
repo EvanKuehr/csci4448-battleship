@@ -3,15 +3,11 @@ import { Router } from 'preact-router';
 
 import Header from './header';
 import Welcome from '../routes/home';
-import Profile from '../routes/profile';
 import NotFound from '../routes/404';
-// import Home from 'async!../routes/home';
-// import Profile from 'async!../routes/profile';
-import PickCard from './modals/PickCard';
-import TakeTurn from './modals/TakeTurn';
-import UseCard from './modals/UseCard';
 import Play from './modals/Play';
 import JoinGame from "./modals/JoinGame";
+import Winner from './modals/Winner';
+import Loser from './modals/Loser';
 
 export default class App extends Component {
 	/** Gets fired when the route changes.
@@ -32,11 +28,8 @@ export default class App extends Component {
 					<Welcome path="/" />
 					<JoinGame path="/join" />
 					<Play path="/play" />
-					<PickCard path="/pick-card" />
-					<TakeTurn path="/take-turn" />
-					<UseCard path="/use-card" />
-					<Profile path="/profile/" user="me" />
-					<Profile path="/profile/:user" />
+					<Winner path="/winner" />
+					<Loser path="/loser" />
 					<NotFound default />
 				</Router>
 			</div>

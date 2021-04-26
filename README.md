@@ -11,7 +11,8 @@ Battleship is a classic two player game in which players use strategy to to sear
 4. `git clone https://github.com/EvanKuehr/csci4448-battleship.git`
 5. in one terminal
    1. `cd battleship`
-   2. `java -jar build/libs/battleship-0.0.1-SNAPSHOT.jar`
+   2. `gradlew build` or `./gradlew build`
+   3. `java -jar build/libs/battleship-0.0.1-SNAPSHOT.jar`
 6. in another terminal
    1. `cd ui`
    2. `npm install`

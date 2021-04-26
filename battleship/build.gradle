@@ -23,3 +23,7 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+apply plugin: 'application'
+
+mainClassName = 'edu.colorado.group18.battleship.BattleshipApplication'
